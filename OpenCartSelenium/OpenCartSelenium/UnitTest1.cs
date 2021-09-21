@@ -14,5 +14,9 @@ namespace OpenCartSelenium
         {
             Assert.Pass();
         }
+        public void Test2()
+        {
+            Assert.Pass();
+        }
     }
 }
