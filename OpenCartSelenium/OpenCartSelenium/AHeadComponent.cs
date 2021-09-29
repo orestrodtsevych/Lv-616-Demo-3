@@ -10,7 +10,7 @@ namespace OpenCartSelenium
 {
     public class AHeadComponent
     {
-       // protected IWebDriver driver = new ChromeDriver();
+        protected IWebDriver driver = new ChromeDriver();
         public IWebElement currency { get; private set; }
         public IWebElement myAccount { get; private set; }
         public IWebElement wishList { get; private set; }
@@ -24,10 +24,10 @@ namespace OpenCartSelenium
 
         public AHeadComponent(IWebDriver driver)
         {
-            //this.driver = driver;
+            this.driver = driver;
             currency = driver.FindElement(By.CssSelector(".btn.btn-link.dropdown-toggle"));
             myAccount = driver.FindElement(By.CssSelector("a[title='My Account']"));
-            wishList = driver.FindElement(By.Id("wishlist-total")); // to do
+            wishList = driver.FindElement(By.Id("wishlist-total"));    // to do
             shoppingCart = driver.FindElement(By.CssSelector("a[title='Shopping Cart']"));
             checkout = driver.FindElement(By.CssSelector("a[title='Checkout']"));
             logo = driver.FindElement(By.Id("logo"));
@@ -51,7 +51,8 @@ namespace OpenCartSelenium
             return result;
         }
         public string getCurrencyText() => currency.Text.Substring(0, 1);
-        public string getWishListText() => wishList.FindElement(By.ClassName("hidden-xs")).Text;  // to do
+        //public string getWishListText() => wishList.Text;
+        public string getWishListText() => wishList.GetAttribute("title");   // to do
         public int getWishListNumber()
         {
             int value = 0;
@@ -61,7 +62,7 @@ namespace OpenCartSelenium
                 if (Char.IsDigit(getWishListText()[i]))
                     result += getWishListText()[i];
             }
-            if (result.Length > 0)
+            if (result.Length >= 0)
                 value = int.Parse(result);
             return value;
         }
@@ -76,6 +77,7 @@ namespace OpenCartSelenium
             IWebDriver driver = new ChromeDriver();
             driver.Navigate().GoToUrl("http://192.168.1.13/opencart/upload/index.php?route=common/home");
             AHeadComponent aHead = new AHeadComponent(driver);
+            string a = aHead.getCurrencyText();
             aHead.getWishListNumber();
         }
     }
