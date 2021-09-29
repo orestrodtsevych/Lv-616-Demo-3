@@ -51,8 +51,7 @@ namespace OpenCartSelenium
             return result;
         }
         public string getCurrencyText() => currency.Text.Substring(0, 1);
-        //public string getWishListText() => wishList.Text;
-        public string getWishListText() => wishList.GetAttribute("title");   // to do
+        public string getWishListText() => wishList.GetAttribute("title");
         public int getWishListNumber()
         {
             int value = 0;
@@ -62,22 +61,27 @@ namespace OpenCartSelenium
                 if (Char.IsDigit(getWishListText()[i]))
                     result += getWishListText()[i];
             }
-            if (result.Length >= 0)
+            if (result.Length > 0)
                 value = int.Parse(result);
             return value;
         }
-
+        public string getShoppingCartText() => shoppingCart.GetAttribute("title");
+        public string getCheckoutText() => checkout.GetAttribute("title");
+        public string getShoppingCartButtonText() => cartButton.Text;
     }
 
     public class Test
     {
         [Test]
-        public void Test1()
+        public void Test1()  //hardcoded Test for testing methods
         {
             IWebDriver driver = new ChromeDriver();
             driver.Navigate().GoToUrl("http://192.168.1.13/opencart/upload/index.php?route=common/home");
             AHeadComponent aHead = new AHeadComponent(driver);
             string a = aHead.getCurrencyText();
+            string b = aHead.getShoppingCartText();
+            string c = aHead.getCheckoutText();
+            string d = aHead.getShoppingCartButtonText();
             aHead.getWishListNumber();
         }
     }
