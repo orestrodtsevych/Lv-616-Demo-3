@@ -17,9 +17,14 @@ namespace OpenCartSelenium
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Navigate().GoToUrl("https://www.google.com.ua/");
         }
+        [Test]
         public void Test2()
         {
-            Assert.Pass();
+            int a = 3;
+            if (a == 3) 
+            {
+                Assert.Pass();
+            }
         }
     }
 }
