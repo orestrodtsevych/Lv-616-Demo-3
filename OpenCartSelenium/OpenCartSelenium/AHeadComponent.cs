@@ -10,6 +10,8 @@ namespace OpenCartSelenium
 {
     public class AHeadComponent
     {
+        private readonly string TAG_ATTRIBUTE_VALUE = "value";
+        private readonly string TAG_ATTRIBUTE_TITLE = "title";
         protected IWebDriver driver = new ChromeDriver();
         public IWebElement currency { get; private set; }
         public IWebElement myAccount { get; private set; }
@@ -51,7 +53,7 @@ namespace OpenCartSelenium
             return result;
         }
         public string getCurrencyText() => currency.Text.Substring(0, 1);
-        public string getWishListText() => wishList.GetAttribute("title");
+        public string getWishListText() => wishList.GetAttribute(TAG_ATTRIBUTE_TITLE);
         public int getWishListNumber()
         {
             int value = 0;
@@ -65,9 +67,10 @@ namespace OpenCartSelenium
                 value = int.Parse(result);
             return value;
         }
-        public string getShoppingCartText() => shoppingCart.GetAttribute("title");
-        public string getCheckoutText() => checkout.GetAttribute("title");
+        public string getShoppingCartText() => shoppingCart.GetAttribute(TAG_ATTRIBUTE_TITLE);
+        public string getCheckoutText() => checkout.GetAttribute(TAG_ATTRIBUTE_TITLE);
         public string getShoppingCartButtonText() => cartButton.Text;
+        public string getSearchProductFieldText() => searchProductField.GetAttribute(TAG_ATTRIBUTE_VALUE);
     }
 
     public class Test
