@@ -13,7 +13,7 @@ namespace OpenCartSelenium
     {
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
-        protected IWebDriver driver = new ChromeDriver();
+        protected IWebDriver driver;
         public IWebElement currency { get; private set; }
         public IWebElement myAccount { get; private set; }
         public IWebElement wishList { get; private set; }
@@ -39,7 +39,8 @@ namespace OpenCartSelenium
             cartButton = driver.FindElement(By.CssSelector("#cart > button"));
             menuTop = driver.FindElements(By.CssSelector("ul.nav.navbar-nav > li"));
         }
-        public IWebElement getCartTotal() => cartButton.FindElement(By.Id("cart-total"));
+        //useless
+        //public IWebElement getCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
         public IWebElement getMenuTopByCategoryPartianName(string categoryName)
         {
             IWebElement result = null;
@@ -53,7 +54,7 @@ namespace OpenCartSelenium
             }
             return result;
         }
-        public string getCurrencyText() => currency.Text.Substring(0, 1);
+        public char getCurrencyText() => Convert.ToChar(currency.Text.Substring(0, 1));
         public string getWishListText() => wishList.GetAttribute(TAG_ATTRIBUTE_TITLE);
         public int getWishListNumber()
         {
@@ -73,15 +74,36 @@ namespace OpenCartSelenium
         public string getShoppingCartButtonText() => cartButton.Text;
         public string getSearchProductFieldText() => searchProductField.GetAttribute(TAG_ATTRIBUTE_VALUE);
 
-        public int getCartAmount()
-        {
-            string number = new string(getShoppingCartButtonText().TakeWhile(Char.IsDigit).ToArray());
-            return int.Parse(number);
-        }
-
+        public int getCartAmount() => int.Parse(getShoppingCartButtonText().TakeWhile(Char.IsDigit).ToArray());
         public double getCartSum()
         {
-            return Double.Parse(Regex.Replace(getShoppingCartButtonText(), "[^0-9.]", "").Replace(".", ","));
+            int i;
+            string str = null;
+            for (i = 0; i < getShoppingCartButtonText().Length; i++)
+            {
+                if (getShoppingCartButtonText()[i] == getCurrencyText())
+                {
+                    break;
+                }
+            }
+            for (int j = i + 1; j < getShoppingCartButtonText().Length; j++)
+            {
+                str += getShoppingCartButtonText()[j];
+            }
+            return Convert.ToDouble(str.Replace(".", ","));
+        }
+        public List<string> getMenuTopText()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in menuTop)
+            {
+                result.Add(item.Text);
+            }
+            return result;
+        }
+        public void setSearchProductField(string text)
+        {
+            searchProductField.SendKeys(text);
         }
     }
 
@@ -91,13 +113,17 @@ namespace OpenCartSelenium
         public void Test1()  //hardcoded Test for testing methods
         {
             IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://192.168.1.13/opencart/upload/index.php?route=common/home");
+            driver.Navigate().GoToUrl("http://192.168.1.16/opencart/upload/index.php?route=common/home");
             AHeadComponent aHead = new AHeadComponent(driver);
-            string a = aHead.getCurrencyText();
+            char a = aHead.getCurrencyText();
             string b = aHead.getShoppingCartText();
             string c = aHead.getCheckoutText();
             string d = aHead.getShoppingCartButtonText();
             int cartAmount = aHead.getCartAmount();
+            double safa = aHead.getCartSum();
+            List<string> qdcw = aHead.getMenuTopText();
+            aHead.setSearchProductField("wdaad");
+
             aHead.getWishListNumber();
         }
     }
