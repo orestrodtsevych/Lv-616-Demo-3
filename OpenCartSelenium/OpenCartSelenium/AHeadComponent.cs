@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 using System.Threading;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace OpenCartSelenium
 {
@@ -71,6 +72,17 @@ namespace OpenCartSelenium
         public string getCheckoutText() => checkout.GetAttribute(TAG_ATTRIBUTE_TITLE);
         public string getShoppingCartButtonText() => cartButton.Text;
         public string getSearchProductFieldText() => searchProductField.GetAttribute(TAG_ATTRIBUTE_VALUE);
+
+        public int getCartAmount()
+        {
+            string number = new string(getShoppingCartButtonText().TakeWhile(Char.IsDigit).ToArray());
+            return int.Parse(number);
+        }
+
+        public double getCartSum()
+        {
+            return Double.Parse(Regex.Replace(getShoppingCartButtonText(), "[^0-9.]", "").Replace(".", ","));
+        }
     }
 
     public class Test
@@ -85,6 +97,7 @@ namespace OpenCartSelenium
             string b = aHead.getShoppingCartText();
             string c = aHead.getCheckoutText();
             string d = aHead.getShoppingCartButtonText();
+            int cartAmount = aHead.getCartAmount();
             aHead.getWishListNumber();
         }
     }
