@@ -1,15 +1,11 @@
-using NUnit.Framework;
 using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System.Threading;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
 
 namespace OpenCartSelenium
 {
-    public class AHeadComponent
+    public abstract class AHeadComponent
     {
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
@@ -80,22 +76,38 @@ namespace OpenCartSelenium
         public string getCheckoutText() => checkout.GetAttribute(TAG_ATTRIBUTE_TITLE);
         public string getShoppingCartButtonText() => cartButton.Text;
         public string getSearchProductFieldText() => searchProductField.GetAttribute(TAG_ATTRIBUTE_VALUE);
-
         public int getCartAmount() => int.Parse(getShoppingCartButtonText().TakeWhile(Char.IsDigit).ToArray());
         public double getCartSum()
         {
             int i;
             string str = null;
-            for (i = 0; i < getShoppingCartButtonText().Length; i++)
+            if (getCurrencyText() != '€')
             {
-                if (getShoppingCartButtonText()[i] == getCurrencyText())
+                for (i = 0; i < getShoppingCartButtonText().Length; i++)
                 {
-                    break;
+                    if (getShoppingCartButtonText()[i] == getCurrencyText())
+                    {
+                        break;
+                    }
+                }
+                for (int j = i + 1; j < getShoppingCartButtonText().Length; j++)
+                {
+                    str += getShoppingCartButtonText()[j];
                 }
             }
-            for (int j = i + 1; j < getShoppingCartButtonText().Length; j++)
+            else
             {
-                str += getShoppingCartButtonText()[j];
+                for (i = 0; i < getShoppingCartButtonText().Length; i++)
+                {
+                    if (getShoppingCartButtonText()[i] == '-')
+                    {
+                        break;
+                    }
+                }
+                for (int j = i + 2; j < getShoppingCartButtonText().Length - 1; j++)
+                {
+                    str += getShoppingCartButtonText()[j];
+                }
             }
             return Convert.ToDouble(str.Replace(".", ","));
         }
@@ -116,28 +128,7 @@ namespace OpenCartSelenium
         {
             searchProductField.Clear();
         }
-    
     }
 
-    public class Test
-    {
-        [Test]
-        public void Test1()  //hardcoded Test for testing methods
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://192.168.1.16/opencart/upload/index.php?route=common/home");
-            AHeadComponent aHead = new AHeadComponent(driver);
-            char a = aHead.getCurrencyText();
-            string b = aHead.getShoppingCartText();
-            string c = aHead.getCheckoutText();
-            string d = aHead.getShoppingCartButtonText();
-            int cartAmount = aHead.getCartAmount();
-            double safa = aHead.getCartSum();
-            List<string> qdcw = aHead.getMenuTopText();
-            aHead.setSearchProductField("wdaad");
-
-            aHead.getWishListNumber();
-        }
-    }
 
 }
