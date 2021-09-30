@@ -6,10 +6,55 @@ using System.Linq;
 namespace OpenCartSelenium
 {
     public abstract class AHeadComponent
-    {
+    { 
+        private class DropdownOptions
+        {
+            private IWebDriver driver;
+            public IList<IWebElement> listOptions { get; private set; }
+            public DropdownOptions(By searchLocator, IWebDriver driver)
+            {
+                this.driver = driver;
+                initListOptions(searchLocator);
+            }
+            private void initListOptions(By searchLocator)
+            {
+                listOptions = driver.FindElements(searchLocator);
+            }
+            public IWebElement getDropdownOptionByPartialName(string optionName)
+            {
+                IWebElement result = null;
+                foreach (var item in listOptions)
+                {
+                    if (item.Text.ToLower().Contains(optionName.ToLower()))
+                    {
+                        result = item;
+                        break;
+                    }
+                }
+                return result;
+            }
+            public List<string> getListOptionsText()
+            {
+                List<string> result = new List<string>();
+                foreach (var item in listOptions)
+                {
+                    result.Add(item.Text);
+                }
+                return result;
+            }
+            public void clickDropdownOptionByPartialName(string optionName)
+            {
+                getDropdownOptionByPartialName(optionName).Click();
+            }
+        }
+
+        //-------------------------------------------------------------
+
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
+        private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
         protected IWebDriver driver;
+        private DropdownOptions dropdownOptions;
         public IWebElement currency { get; private set; }
         public IWebElement myAccount { get; private set; }
         public IWebElement wishList { get; private set; }
@@ -35,6 +80,12 @@ namespace OpenCartSelenium
             menuTop = driver.FindElements(By.CssSelector("ul.nav.navbar-nav > li"));
         }
         public void clickCurrency() => currency.Click();
+        public void clickCurrencyByPartialName(string optionName)
+        {
+            clickCurrency();
+            createDropdownOptions(By.CssSelector("div.btn-group.open ul.dropdown-menu li"));
+            clickDropdownOptionByPartialName(optionName);
+        }
         public void clickMyAccount() => myAccount.Click();
         public void clickWishList() => wishList.Click();
         public void clickShoppingCart() => shoppingCart.Click();
@@ -128,7 +179,36 @@ namespace OpenCartSelenium
         {
             searchProductField.Clear();
         }
+
+        // Dropdown Methods
+
+        private void createDropdownOptions(By searchLocator)
+        {
+            dropdownOptions = new DropdownOptions(searchLocator, driver);
+        }
+        private void clickDropdownOptionByPartialName(string optionName)
+        {
+            if (!findDropdownOptionByPartialName(optionName))
+            {
+                throw new FormatException(OPTION_NOT_FOUND_MESSAGE);
+            }
+            dropdownOptions.clickDropdownOptionByPartialName(optionName);
+        }
+        private bool findDropdownOptionByPartialName(string optionName)
+        {
+            bool isFound = false;
+            if (dropdownOptions == null) 
+            {
+                throw new FormatException("DropdownOptions is Null");
+            }
+            foreach (var item in dropdownOptions.getListOptionsText())
+            {
+                if (item.ToLower().Contains(optionName.ToLower()))
+                {
+                    isFound = true;
+                }
+            }
+            return isFound;
+        }
     }
-
-
 }
