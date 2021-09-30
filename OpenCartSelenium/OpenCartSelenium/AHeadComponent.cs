@@ -24,7 +24,6 @@ namespace OpenCartSelenium
         public IWebElement searchProductButton { get; private set; }
         public IWebElement cartButton { get; private set; }
         public IList<IWebElement> menuTop { get; private set; }
-
         public AHeadComponent(IWebDriver driver)
         {
             this.driver = driver;
@@ -39,6 +38,14 @@ namespace OpenCartSelenium
             cartButton = driver.FindElement(By.CssSelector("#cart > button"));
             menuTop = driver.FindElements(By.CssSelector("ul.nav.navbar-nav > li"));
         }
+        public void clickCurrency() => currency.Click();
+        public void clickMyAccount() => myAccount.Click();
+        public void clickWishList() => wishList.Click();
+        public void clickShoppingCart() => shoppingCart.Click();
+        public void clickCheckout() => checkout.Click();
+        public void clickLogo() => logo.Click();
+        public void clickSearchProductField() => searchProductField.Click();
+        public void clickCartButton() => cartButton.Click();
         //useless
         //public IWebElement getCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
         public IWebElement getMenuTopByCategoryPartianName(string categoryName)
@@ -105,6 +112,11 @@ namespace OpenCartSelenium
         {
             searchProductField.SendKeys(text);
         }
+        public void clearSearchProductField()
+        {
+            searchProductField.Clear();
+        }
+    
     }
 
     public class Test
