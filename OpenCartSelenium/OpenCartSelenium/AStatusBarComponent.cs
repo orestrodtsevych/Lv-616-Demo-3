@@ -9,7 +9,7 @@ namespace OpenCartSelenium
     {
         private readonly string STATUS_BAR_ERROR = "STATUS_BAR_ERROR";
         public IList<IWebElement> breadcrumps { get; private set; }
-        public AStatusBarComponent(IWebDriver driver) : base(driver) 
+        public AStatusBarComponent(IWebDriver driver) : base(driver)
         {
             breadcrumps = driver.FindElements(By.CssSelector(".beradrump li"));
         }
@@ -28,6 +28,7 @@ namespace OpenCartSelenium
             return getBreadcrumb(breadcrumbIndex).Text;
         }
         public string getLastBreadcrumbText() => getLastBreadcrumb().Text;
+        public void clickBreadcrumb(int breadcrumbIndex) => getBreadcrumb(breadcrumbIndex).Click();
 
     }
 }
