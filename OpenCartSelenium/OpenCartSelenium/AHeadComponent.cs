@@ -82,6 +82,7 @@ namespace OpenCartSelenium
         public void clickCurrency() => currency.Click();
         public void clickCurrencyByPartialName(string optionName)
         {
+            searchProductField.Click();
             clickCurrency();
             createDropdownOptions(By.CssSelector("div.btn-group.open ul.dropdown-menu li"));
             clickDropdownOptionByPartialName(optionName);
@@ -193,6 +194,7 @@ namespace OpenCartSelenium
                 throw new FormatException(OPTION_NOT_FOUND_MESSAGE);
             }
             dropdownOptions.clickDropdownOptionByPartialName(optionName);
+            dropdownOptions = null;
         }
         private bool findDropdownOptionByPartialName(string optionName)
         {
