@@ -10,9 +10,9 @@ namespace OpenCartSelenium
     class HomePage : AHeadComponent
     {
         public HomePage(IWebDriver driver) : base(driver) { }
-        public HomePage chooseCurrency(string currency)
+        public HomePage ChooseCurrency(string currency)
         {
-            clickCurrencyByPartialName(currency);
+            ClickCurrencyByPartialName(currency);
             return new HomePage(driver);
         }
 

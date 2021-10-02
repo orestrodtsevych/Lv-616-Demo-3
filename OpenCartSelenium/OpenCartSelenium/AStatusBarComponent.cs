@@ -8,27 +8,27 @@ namespace OpenCartSelenium
     public abstract class AStatusBarComponent : AHeadComponent
     {
         private readonly string STATUS_BAR_ERROR = "STATUS_BAR_ERROR";
-        public IList<IWebElement> breadcrumps { get; private set; }
+        public IList<IWebElement> Breadcrumps { get; private set; }
         public AStatusBarComponent(IWebDriver driver) : base(driver)
         {
-            breadcrumps = driver.FindElements(By.CssSelector(".beradrump li"));
+            Breadcrumps = driver.FindElements(By.CssSelector(".beradrump li"));
         }
-        public int getCountBreadcrumps() => breadcrumps.Count;
-        public IWebElement getBreadcrumb(int breadcrumbIndex)
+        public int GetCountBreadcrumps() => Breadcrumps.Count;
+        public IWebElement GetBreadcrumb(int breadcrumbIndex)
         {
-            if (breadcrumbIndex >= getCountBreadcrumps())
+            if (breadcrumbIndex >= GetCountBreadcrumps())
             {
                 throw new Exception(STATUS_BAR_ERROR);
             }
-            return breadcrumps[breadcrumbIndex];
+            return Breadcrumps[breadcrumbIndex];
         }
-        public IWebElement getLastBreadcrumb() => breadcrumps[getCountBreadcrumps() - 1];
-        public string getBreadcrumbText(int breadcrumbIndex)
+        public IWebElement GetLastBreadcrumb() => Breadcrumps[GetCountBreadcrumps() - 1];
+        public string GetBreadcrumbText(int breadcrumbIndex)
         {
-            return getBreadcrumb(breadcrumbIndex).Text;
+            return GetBreadcrumb(breadcrumbIndex).Text;
         }
-        public string getLastBreadcrumbText() => getLastBreadcrumb().Text;
-        public void clickBreadcrumb(int breadcrumbIndex) => getBreadcrumb(breadcrumbIndex).Click();
+        public string GetLastBreadcrumbText() => GetLastBreadcrumb().Text;
+        public void ClickBreadcrumb(int breadcrumbIndex) => GetBreadcrumb(breadcrumbIndex).Click();
 
     }
 }

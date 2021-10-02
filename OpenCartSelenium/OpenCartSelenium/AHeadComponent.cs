@@ -9,21 +9,21 @@ namespace OpenCartSelenium
     { 
         private class DropdownOptions
         {
-            private IWebDriver driver;
-            public IList<IWebElement> listOptions { get; private set; }
+            private readonly IWebDriver driver;
+            public IList<IWebElement> ListOptions { get; private set; }
             public DropdownOptions(By searchLocator, IWebDriver driver)
             {
                 this.driver = driver;
-                initListOptions(searchLocator);
+                InitListOptions(searchLocator);
             }
-            private void initListOptions(By searchLocator)
+            private void InitListOptions(By searchLocator)
             {
-                listOptions = driver.FindElements(searchLocator);
+                ListOptions = driver.FindElements(searchLocator);
             }
-            public IWebElement getDropdownOptionByPartialName(string optionName)
+            public IWebElement GetDropdownOptionByPartialName(string optionName)
             {
                 IWebElement result = null;
-                foreach (var item in listOptions)
+                foreach (var item in ListOptions)
                 {
                     if (item.Text.ToLower().Contains(optionName.ToLower()))
                     {
@@ -33,18 +33,18 @@ namespace OpenCartSelenium
                 }
                 return result;
             }
-            public List<string> getListOptionsText()
+            public List<string> GetListOptionsText()
             {
                 List<string> result = new List<string>();
-                foreach (var item in listOptions)
+                foreach (var item in ListOptions)
                 {
                     result.Add(item.Text);
                 }
                 return result;
             }
-            public void clickDropdownOptionByPartialName(string optionName)
+            public void ClickDropdownOptionByPartialName(string optionName)
             {
-                getDropdownOptionByPartialName(optionName).Click();
+                GetDropdownOptionByPartialName(optionName).Click();
             }
         }
 
@@ -55,58 +55,58 @@ namespace OpenCartSelenium
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
         protected IWebDriver driver;
         private DropdownOptions dropdownOptions;
-        public IWebElement currency { get; private set; }
-        public IWebElement myAccount { get; private set; }
-        public IWebElement wishList { get; private set; }
-        public IWebElement shoppingCart { get; private set; }
-        public IWebElement checkout { get; private set; }
-        public IWebElement logo { get; private set; }
-        public IWebElement searchProductField { get; private set; }
-        public IWebElement searchProductButton { get; private set; }
-        public IWebElement cartButton { get; private set; }
-        public IList<IWebElement> menuTop { get; private set; }
+        public IWebElement Currency { get; private set; }
+        public IWebElement MyAccount { get; private set; }
+        public IWebElement WishList { get; private set; }
+        public IWebElement ShoppingCart { get; private set; }
+        public IWebElement Checkout { get; private set; }
+        public IWebElement Logo { get; private set; }
+        public IWebElement SearchProductField { get; private set; }
+        public IWebElement SearchProductButton { get; private set; }
+        public IWebElement CartButton { get; private set; }
+        public IList<IWebElement> MenuTop { get; private set; }
         public AHeadComponent(IWebDriver driver)
         {
             this.driver = driver;
-            currency = driver.FindElement(By.CssSelector(".btn.btn-link.dropdown-toggle"));
-            myAccount = driver.FindElement(By.CssSelector("a[title='My Account']"));
-            wishList = driver.FindElement(By.Id("wishlist-total"));    // to do
-            shoppingCart = driver.FindElement(By.CssSelector("a[title='Shopping Cart']"));
-            checkout = driver.FindElement(By.CssSelector("a[title='Checkout']"));
-            logo = driver.FindElement(By.Id("logo"));
-            searchProductField = driver.FindElement(By.Name("search"));
-            searchProductButton = driver.FindElement(By.Id("cart"));
-            cartButton = driver.FindElement(By.CssSelector("#cart > button"));
-            menuTop = driver.FindElements(By.CssSelector("ul.nav.navbar-nav > li"));
+            Currency = driver.FindElement(By.CssSelector(".btn.btn-link.dropdown-toggle"));
+            MyAccount = driver.FindElement(By.CssSelector("a[title='My Account']"));
+            WishList = driver.FindElement(By.Id("wishlist-total"));    // to do
+            ShoppingCart = driver.FindElement(By.CssSelector("a[title='Shopping Cart']"));
+            Checkout = driver.FindElement(By.CssSelector("a[title='Checkout']"));
+            Logo = driver.FindElement(By.Id("logo"));
+            SearchProductField = driver.FindElement(By.Name("search"));
+            SearchProductButton = driver.FindElement(By.Id("cart"));
+            CartButton = driver.FindElement(By.CssSelector("#cart > button"));
+            MenuTop = driver.FindElements(By.CssSelector("ul.nav.navbar-nav > li"));
         }
-        public void clickCurrency() => currency.Click();
-        public void clickCurrencyByPartialName(string optionName)
+        public void ClickCurrency() => Currency.Click();
+        public void ClickCurrencyByPartialName(string optionName)
         {
-            clickSearchProductField();
-            clickCurrency();
-            createDropdownOptions(By.CssSelector("div.btn-group.open ul.dropdown-menu li"));
-            clickDropdownOptionByPartialName(optionName);
+            ClickSearchProductField();
+            ClickCurrency();
+            CreateDropdownOptions(By.CssSelector("div.btn-group.open ul.dropdown-menu li"));
+            ClickDropdownOptionByPartialName(optionName);
         }
-        public void clickMyAccount() => myAccount.Click();
-        public void clickMyAccountOptionByPartialName(string optionName)
+        public void ClickMyAccount() => MyAccount.Click();
+        public void ClickMyAccountOptionByPartialName(string optionName)
         {
-            clickSearchProductField();
-            clickMyAccount();
-            createDropdownOptions(By.CssSelector("ul.dropdown-menu.dropdown-menu-right li"));
-            clickDropdownOptionByPartialName(optionName);
+            ClickSearchProductField();
+            ClickMyAccount();
+            CreateDropdownOptions(By.CssSelector("ul.dropdown-menu.dropdown-menu-right li"));
+            ClickDropdownOptionByPartialName(optionName);
         }
-        public void clickWishList() => wishList.Click();
-        public void clickShoppingCart() => shoppingCart.Click();
-        public void clickCheckout() => checkout.Click();
-        public void clickLogo() => logo.Click();
-        public void clickSearchProductField() => searchProductField.Click();
-        public void clickCartButton() => cartButton.Click();
+        public void ClickWishList() => WishList.Click();
+        public void ClickShoppingCart() => ShoppingCart.Click();
+        public void ClickCheckout() => Checkout.Click();
+        public void ClickLogo() => Logo.Click();
+        public void ClickSearchProductField() => SearchProductField.Click();
+        public void ClickCartButton() => CartButton.Click();
         //useless
-        //public IWebElement getCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
-        public IWebElement getMenuTopByCategoryPartianName(string categoryName)
+        //public IWebElement GetCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
+        public IWebElement GetMenuTopByCategoryPartianName(string categoryName)
         {
             IWebElement result = null;
-            foreach (IWebElement current in menuTop)
+            foreach (IWebElement current in MenuTop)
             {
                 if (current.FindElement(By.CssSelector("a.dropdown-toggle")).Text.ToLower().Contains(categoryName.ToLower()))
                 {
@@ -116,101 +116,101 @@ namespace OpenCartSelenium
             }
             return result;
         }
-        public char getCurrencyText() => Convert.ToChar(currency.Text.Substring(0, 1));
-        public string getWishListText() => wishList.GetAttribute(TAG_ATTRIBUTE_TITLE);
-        public int getWishListNumber()
+        public char GetCurrencyText() => Convert.ToChar(Currency.Text.Substring(0, 1));
+        public string GetWishListText() => WishList.GetAttribute(TAG_ATTRIBUTE_TITLE);
+        public int GetWishListNumber()
         {
             int value = 0;
             string result = string.Empty;
-            for (int i = 0; i < getWishListText().Length; i++)
+            for (int i = 0; i < GetWishListText().Length; i++)
             {
-                if (Char.IsDigit(getWishListText()[i]))
-                    result += getWishListText()[i];
+                if (Char.IsDigit(GetWishListText()[i]))
+                    result += GetWishListText()[i];
             }
             if (result.Length > 0)
                 value = int.Parse(result);
             return value;
         }
-        public string getShoppingCartText() => shoppingCart.GetAttribute(TAG_ATTRIBUTE_TITLE);
-        public string getCheckoutText() => checkout.GetAttribute(TAG_ATTRIBUTE_TITLE);
-        public string getShoppingCartButtonText() => cartButton.Text;
-        public string getSearchProductFieldText() => searchProductField.GetAttribute(TAG_ATTRIBUTE_VALUE);
-        public int getCartAmount() => int.Parse(getShoppingCartButtonText().TakeWhile(Char.IsDigit).ToArray());
-        public double getCartSum()
+        public string GetShoppingCartText() => ShoppingCart.GetAttribute(TAG_ATTRIBUTE_TITLE);
+        public string GetCheckoutText() => Checkout.GetAttribute(TAG_ATTRIBUTE_TITLE);
+        public string GetShoppingCartButtonText() => CartButton.Text;
+        public string GetSearchProductFieldText() => SearchProductField.GetAttribute(TAG_ATTRIBUTE_VALUE);
+        public int GetCartAmount() => int.Parse(GetShoppingCartButtonText().TakeWhile(Char.IsDigit).ToArray());
+        public double GetCartSum()
         {
             int i;
             string str = null;
-            if (getCurrencyText() != '€')
+            if (GetCurrencyText() != '€')
             {
-                for (i = 0; i < getShoppingCartButtonText().Length; i++)
+                for (i = 0; i < GetShoppingCartButtonText().Length; i++)
                 {
-                    if (getShoppingCartButtonText()[i] == getCurrencyText())
+                    if (GetShoppingCartButtonText()[i] == GetCurrencyText())
                     {
                         break;
                     }
                 }
-                for (int j = i + 1; j < getShoppingCartButtonText().Length; j++)
+                for (int j = i + 1; j < GetShoppingCartButtonText().Length; j++)
                 {
-                    str += getShoppingCartButtonText()[j];
+                    str += GetShoppingCartButtonText()[j];
                 }
             }
             else
             {
-                for (i = 0; i < getShoppingCartButtonText().Length; i++)
+                for (i = 0; i < GetShoppingCartButtonText().Length; i++)
                 {
-                    if (getShoppingCartButtonText()[i] == '-')
+                    if (GetShoppingCartButtonText()[i] == '-')
                     {
                         break;
                     }
                 }
-                for (int j = i + 2; j < getShoppingCartButtonText().Length - 1; j++)
+                for (int j = i + 2; j < GetShoppingCartButtonText().Length - 1; j++)
                 {
-                    str += getShoppingCartButtonText()[j];
+                    str += GetShoppingCartButtonText()[j];
                 }
             }
             return Convert.ToDouble(str.Replace(".", ","));
         }
-        public List<string> getMenuTopText()
+        public List<string> GetMenuTopText()
         {
             List<string> result = new List<string>();
-            foreach (var item in menuTop)
+            foreach (var item in MenuTop)
             {
                 result.Add(item.Text);
             }
             return result;
         }
-        public void setSearchProductField(string text)
+        public void SetSearchProductField(string text)
         {
-            searchProductField.SendKeys(text);
+            SearchProductField.SendKeys(text);
         }
-        public void clearSearchProductField()
+        public void ClearSearchProductField()
         {
-            searchProductField.Clear();
+            SearchProductField.Clear();
         }
 
         // Dropdown Methods
 
-        private void createDropdownOptions(By searchLocator)
+        private void CreateDropdownOptions(By searchLocator)
         {
             dropdownOptions = new DropdownOptions(searchLocator, driver);
         }
-        private void clickDropdownOptionByPartialName(string optionName)
+        private void ClickDropdownOptionByPartialName(string optionName)
         {
-            if (!findDropdownOptionByPartialName(optionName))
+            if (!FindDropdownOptionByPartialName(optionName))
             {
                 throw new FormatException(OPTION_NOT_FOUND_MESSAGE);
             }
-            dropdownOptions.clickDropdownOptionByPartialName(optionName);
+            dropdownOptions.ClickDropdownOptionByPartialName(optionName);
             dropdownOptions = null;
         }
-        private bool findDropdownOptionByPartialName(string optionName)
+        private bool FindDropdownOptionByPartialName(string optionName)
         {
             bool isFound = false;
             if (dropdownOptions == null) 
             {
                 throw new FormatException("DropdownOptions is Null");
             }
-            foreach (var item in dropdownOptions.getListOptionsText())
+            foreach (var item in dropdownOptions.GetListOptionsText())
             {
                 if (item.ToLower().Contains(optionName.ToLower()))
                 {
