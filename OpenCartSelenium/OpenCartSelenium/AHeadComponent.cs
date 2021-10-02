@@ -82,12 +82,19 @@ namespace OpenCartSelenium
         public void clickCurrency() => currency.Click();
         public void clickCurrencyByPartialName(string optionName)
         {
-            searchProductField.Click();
+            clickSearchProductField();
             clickCurrency();
             createDropdownOptions(By.CssSelector("div.btn-group.open ul.dropdown-menu li"));
             clickDropdownOptionByPartialName(optionName);
         }
         public void clickMyAccount() => myAccount.Click();
+        public void clickMyAccountOptionByPartialName(string optionName)
+        {
+            clickSearchProductField();
+            clickMyAccount();
+            createDropdownOptions(By.CssSelector("ul.dropdown-menu.dropdown-menu-right li"));
+            clickDropdownOptionByPartialName(optionName);
+        }
         public void clickWishList() => wishList.Click();
         public void clickShoppingCart() => shoppingCart.Click();
         public void clickCheckout() => checkout.Click();
