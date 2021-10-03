@@ -53,11 +53,11 @@ namespace OpenCartSelenium
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
         private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
-        protected IWebDriver driver;
         private DropdownOptions dropdownOptions;
+        protected IWebDriver driver;
         public IWebElement Currency { get; private set; }
         public IWebElement MyAccount { get; private set; }
-        public IWebElement WishList { get; private set; }
+        public IWebElement WishList { get; private set; } 
         public IWebElement ShoppingCart { get; private set; }
         public IWebElement Checkout { get; private set; }
         public IWebElement Logo { get; private set; }
@@ -65,6 +65,7 @@ namespace OpenCartSelenium
         public IWebElement SearchProductButton { get; private set; }
         public IWebElement CartButton { get; private set; }
         public IList<IWebElement> MenuTop { get; private set; }
+        public static bool LoggedUser { get; protected set; }
         public AHeadComponent(IWebDriver driver)
         {
             this.driver = driver;
