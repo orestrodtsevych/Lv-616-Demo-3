@@ -53,6 +53,8 @@ namespace OpenCartSelenium
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
         private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
+        private readonly string LOGOUT_ERROR = "LOGOUT_ERROR";
+        private readonly string LOGIN_ERROR = "LOGIN_ERROR";
         private DropdownOptions dropdownOptions;
         protected IWebDriver driver;
         public IWebElement Currency { get; private set; }
@@ -65,7 +67,7 @@ namespace OpenCartSelenium
         public IWebElement SearchProductButton { get; private set; }
         public IWebElement CartButton { get; private set; }
         public IList<IWebElement> MenuTop { get; private set; }
-        public static bool LoggedUser { get; protected set; }
+        public static bool LoggedUser { get; protected set; } = false;
         public AHeadComponent(IWebDriver driver)
         {
             this.driver = driver;
@@ -219,6 +221,27 @@ namespace OpenCartSelenium
                 }
             }
             return isFound;
+        }
+
+        public LoginPage GoToLoginPage()
+        {
+            if (!LoggedUser)
+            {
+                throw new Exception(LOGIN_ERROR);
+            }
+            ClickMyAccountOptionByPartialName("Login");
+            return new LoginPage(driver);
+        }
+        public AccountLogoutPage Logout()
+        {
+            if (!LoggedUser)
+            {
+                throw new Exception(LOGOUT_ERROR);
+            }
+            ClickMyAccountOptionByPartialName("Logout");
+            LoggedUser = false;
+            ClickLogo();
+            return new AccountLogoutPage(driver);
         }
     }
 }

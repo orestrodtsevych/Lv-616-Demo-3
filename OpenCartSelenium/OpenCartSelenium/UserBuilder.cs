@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenCartSelenium
 {
-    class UserBuilder
+    public class UserBuilder
     {
         private User _user;
         public UserBuilder()
@@ -23,7 +23,7 @@ namespace OpenCartSelenium
         }
         public UserBuilder SetEMail(string email)
         {
-            _user.eMail = email;
+            _user.EMail = email;
             return this;
         }
         public UserBuilder SetTelephone(string telephone)

@@ -4,11 +4,11 @@ using System.Text;
 
 namespace OpenCartSelenium
 {
-    class User
+    public class User
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string eMail { get; set; }
+        public string EMail { get; set; }
         public string Telephone { get; set; }
         public string MainAdress { get; set; }
         public string City { get; set; }

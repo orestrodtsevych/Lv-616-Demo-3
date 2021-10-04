@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace OpenCartSelenium
 {
-    class AUnloggedRightMenuComponent : AStatusBarComponent
+    public abstract class AUnloggedRightMenuComponent : AStatusBarComponent
     {
         public AUnloggedRightMenuComponent(IWebDriver driver) : base(driver)
         { }
