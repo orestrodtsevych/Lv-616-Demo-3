@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace OpenCartSelenium
 {
-    class LoginPage
+    class LoginPage : AUnloggedRightMenuComponent
     {
         public IWebElement EmailField { get; private set; }
         public IWebElement PasswordField { get; private set; }
