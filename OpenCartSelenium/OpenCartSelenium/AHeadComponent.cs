@@ -6,7 +6,7 @@ using System.Linq;
 namespace OpenCartSelenium
 {
     public abstract class AHeadComponent
-    { 
+    {
         private class DropdownOptions
         {
             private readonly IWebDriver driver;
@@ -59,7 +59,7 @@ namespace OpenCartSelenium
         protected IWebDriver driver;
         public IWebElement Currency { get; private set; }
         public IWebElement MyAccount { get; private set; }
-        public IWebElement WishList { get; private set; } 
+        public IWebElement WishList { get; private set; }
         public IWebElement ShoppingCart { get; private set; }
         public IWebElement Checkout { get; private set; }
         public IWebElement Logo { get; private set; }
@@ -209,7 +209,7 @@ namespace OpenCartSelenium
         private bool FindDropdownOptionByPartialName(string optionName)
         {
             bool isFound = false;
-            if (dropdownOptions == null) 
+            if (dropdownOptions == null)
             {
                 throw new FormatException("DropdownOptions is Null");
             }
@@ -242,6 +242,10 @@ namespace OpenCartSelenium
             LoggedUser = false;
             ClickLogo();
             return new AccountLogoutPage(driver);
+        }
+        public MyAccountPage Login(User user)
+        {
+             return GoToLoginPage().SuccessfullLogin(user);
         }
     }
 }
