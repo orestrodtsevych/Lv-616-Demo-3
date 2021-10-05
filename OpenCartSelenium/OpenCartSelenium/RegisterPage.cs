@@ -14,7 +14,8 @@ namespace OpenCartSelenium
         public IWebElement PasswordField;
         public IWebElement ConfirmPasswordField;
         public IWebElement SubscribeRadio;
-
+        public IWebElement AgreeCheckBox;
+        public IWebElement ContinueButton;
 
         public RegisterPage(IWebDriver driver): base(driver)
         {
@@ -29,6 +30,8 @@ namespace OpenCartSelenium
             TelephoneField = driver.FindElement(By.Id("input-telephone"));
             PasswordField = driver.FindElement(By.Id("input-password"));
             ConfirmPasswordField = driver.FindElement(By.Id("input-confirm"));
+            AgreeCheckBox = driver.FindElement(By.Name("agree"));
+            ContinueButton = driver.FindElement(By.CssSelector(".btn-primary"));
         }
 
         public void ClickFirstNameField() => FirstNameField.Click();
