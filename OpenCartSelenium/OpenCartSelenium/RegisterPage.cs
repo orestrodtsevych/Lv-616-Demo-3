@@ -7,15 +7,15 @@ namespace OpenCartSelenium
 {
     class RegisterPage: AUnloggedRightMenuComponent
     {
-        public IWebElement FirstNameField;
-        public IWebElement LastNameField;
-        public IWebElement EMailField;
-        public IWebElement TelephoneField;
-        public IWebElement PasswordField;
-        public IWebElement ConfirmPasswordField;
-        public IWebElement SubscribeRadio;
-        public IWebElement AgreeCheckBox;
-        public IWebElement ContinueButton;
+        public IWebElement FirstNameField { get; private set; }
+        public IWebElement LastNameField { get; private set; }
+        public IWebElement EMailField { get; private set; }
+        public IWebElement TelephoneField { get; private set; }
+        public IWebElement PasswordField { get; private set; }
+        public IWebElement ConfirmPasswordField { get; private set; }
+        public IWebElement SubscribeRadio { get; private set; }
+        public IWebElement AgreeCheckBox { get; private set; }
+        public IWebElement ContinueButton { get; private set; }
 
         public RegisterPage(IWebDriver driver): base(driver)
         {
@@ -40,10 +40,5 @@ namespace OpenCartSelenium
         public void ClickTelephoneField() => TelephoneField.Click();
         public void ClickPasswordField() => PasswordField.Click();
         public void ClickConfirmPasswordField() => ConfirmPasswordField.Click();
-
-
-
-
-
     }
 }
