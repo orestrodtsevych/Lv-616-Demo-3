@@ -225,7 +225,7 @@ namespace OpenCartSelenium
 
         public LoginPage GoToLoginPage()
         {
-            if (!LoggedUser)
+            if (LoggedUser)
             {
                 throw new Exception(LOGIN_ERROR);
             }
