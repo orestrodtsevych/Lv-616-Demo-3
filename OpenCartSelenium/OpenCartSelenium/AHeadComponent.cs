@@ -240,7 +240,6 @@ namespace OpenCartSelenium
             }
             ClickMyAccountOptionByPartialName("Logout");
             LoggedUser = false;
-            ClickLogo();
             return new AccountLogoutPage(driver);
         }
         public MyAccountPage Login(User user)

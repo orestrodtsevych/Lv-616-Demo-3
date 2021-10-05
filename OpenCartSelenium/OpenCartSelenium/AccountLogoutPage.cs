@@ -11,7 +11,7 @@ namespace OpenCartSelenium
         public IWebElement AccountLogoutLable { get; private set; }
         public AccountLogoutPage(IWebDriver driver) : base(driver)
         {
-            AccountLogoutLable = driver.FindElement(By.CssSelector(""));
+            AccountLogoutLable = driver.FindElement(By.CssSelector("#content h1"));
         }
         public string GetAccountLogoutLabletext() => AccountLogoutLable.Text;
     }
