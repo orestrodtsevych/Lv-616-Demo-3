@@ -2,7 +2,7 @@ using System;
 using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
-
+//****
 namespace OpenCartSelenium
 {
     public abstract class AHeadComponent
@@ -68,6 +68,14 @@ namespace OpenCartSelenium
         public IWebElement CartButton { get; private set; }
         public IList<IWebElement> MenuTop { get; private set; }
         public static bool LoggedUser { get; protected set; } = false;
+        public IWebElement DesktopCategory { get; private set; }
+        public IWebElement LaptopsAndNotebooksCategory { get; private set; }
+        public IWebElement ComponentsCategory { get; private set; }
+        public IWebElement TabletsCategory { get; private set; }
+        public IWebElement SoftwareCategory { get; private set; }
+        public IWebElement PhonesAndPdasCategory { get; private set; }
+        public IWebElement CamerasCategory { get; private set; }
+        public IWebElement MP3PlayersCategory { get; private set; }
         public AHeadComponent(IWebDriver driver)
         {
             this.driver = driver;
@@ -81,6 +89,14 @@ namespace OpenCartSelenium
             SearchProductButton = driver.FindElement(By.Id("cart"));
             CartButton = driver.FindElement(By.CssSelector("#cart > button"));
             MenuTop = driver.FindElements(By.CssSelector("ul.nav.navbar-nav > li"));
+            DesktopCategory = driver.FindElement(By.LinkText("Desktops"));
+            LaptopsAndNotebooksCategory = driver.FindElement(By.LinkText("Laptops & Notebooks"));
+            ComponentsCategory = driver.FindElement(By.LinkText("Components"));
+            TabletsCategory = driver.FindElement(By.LinkText("Tablets"));
+            SoftwareCategory = driver.FindElement(By.LinkText("Software"));
+            PhonesAndPdasCategory = driver.FindElement(By.LinkText("Phones & PDAs"));
+            CamerasCategory = driver.FindElement(By.LinkText("Cameras"));
+            MP3PlayersCategory = driver.FindElement(By.LinkText("MP3 Players"));
         }
         public void ClickCurrency() => Currency.Click();
         public void ClickCurrencyByPartialName(string optionName)
