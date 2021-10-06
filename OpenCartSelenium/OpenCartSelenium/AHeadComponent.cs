@@ -120,6 +120,30 @@ namespace OpenCartSelenium
         public void ClickLogo() => Logo.Click();
         public void ClickSearchProductField() => SearchProductField.Click();
         public void ClickCartButton() => CartButton.Click();
+        public void ClickDesktopCategory() => DesktopCategory.Click();
+        public void ClickLaptopsAndNotebooksCategory() => LaptopsAndNotebooksCategory.Click();
+        public void ClickComponentsCategory() => ComponentsCategory.Click();
+        public void ClickTabletsCategory() => TabletsCategory.Click();
+        public void ClickSoftwareCategory() => SoftwareCategory.Click();
+        public void ClickPhonesAndPdasCategory() => PhonesAndPdasCategory.Click();
+        public void ClickCamerasCategory() => CamerasCategory.Click();
+        public void ClickMP3PlayersCategory() => MP3PlayersCategory.Click();
+
+        public void ClickItemFromCategoryByPartialLinkText(string Category,string CategoryItem)
+        {
+            ClickSearchProductField();
+            try
+            {
+                driver.FindElement(By.LinkText(Category));
+                driver.FindElement(By.PartialLinkText(CategoryItem));
+            }
+            catch
+            {
+                new Exception("Invalid category name or item from category");
+            }
+        }
+
+
         //useless
         //public IWebElement GetCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
         public IWebElement GetMenuTopByCategoryPartianName(string categoryName)
