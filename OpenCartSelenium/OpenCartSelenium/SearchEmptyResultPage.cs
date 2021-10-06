@@ -7,10 +7,10 @@ namespace OpenCartSelenium
 {
     class SearchEmptyResultPage : SearchCriteriaComponent
     {
-        public IWebElement EmptyResultPageLabel { get; private set; }
+        public IWebElement EmptyResultPageLabel { get; private set; }       
         public SearchEmptyResultPage(IWebDriver driver) : base(driver)
         {
-            EmptyResultPageLabel = driver.FindElement(By.XPath("//*[@id='content']/p[2]"));
+            EmptyResultPageLabel = driver.FindElement(By.XPath("//*[@id='content']/p[2]"));            
         }
     }
 }
