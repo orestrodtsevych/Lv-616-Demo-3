@@ -6,6 +6,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Threading;
 using System.IO;
+using OpenQA.Selenium.Support.UI;
 
 namespace OpenCartSelenium.EugeneTests
 {
@@ -74,6 +75,31 @@ namespace OpenCartSelenium.EugeneTests
             resultPage.ClickButtonGridView();
             //Assert
             Assert.IsTrue(resultPage.ButtonGridView.GetAttribute(TAG_ATTRIBUTE_CLASS).Contains(OPTION_ACTIVE));
+        }
+        [Test]
+        public void CategoriesTest()
+        {
+            //Arrange
+            string expectedTitle = "MacBook";
+
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(OpenCartURL);
+            HomePage homePage = new HomePage(driver);
+            homePage.ClearSearchProductField();
+            homePage.SetSearchProductField("Mac");
+            homePage.SetSearchProductField(Keys.Enter);
+
+            SearchCriteriaComponent searchCriteria = new SearchCriteriaComponent(driver);
+            searchCriteria.ClickCategory();
+            searchCriteria.SelectCategory("Desktops");
+            searchCriteria.ClickSearchCriteriaButton();
+
+            SearchResultPage resultPage = new SearchResultPage(driver);
+            SelectElement expectedCategory = new SelectElement(resultPage.Categories);
+            expectedCategory.SelectByValue("20");
+
+            Assert.AreEqual(expectedCategory.SelectedOption.Text, "Desktops");
+            Assert.AreEqual(expectedTitle, resultPage.FirstProductTitle.Text);
         }
     }
 }
