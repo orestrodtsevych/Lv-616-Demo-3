@@ -21,9 +21,12 @@ namespace OpenCartSelenium.YevheniiTests
         public void BeforeAllMethods()
         {
             driver = new ChromeDriver(ChromeDriverURL);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(OpenCartURL);
         }
-        [SetUp]
+        //[SetUp]
         public void Setup()
         {
             driver.Manage().Window.Maximize();
@@ -37,15 +40,42 @@ namespace OpenCartSelenium.YevheniiTests
             // Act
             HomePage homePage = new HomePage(driver);
             homePage.ClickPhonesAndPdasCategory();
-            
+            //ClickOnCompareButtons();
+            ProductsListComponent productsList = new ProductsListComponent(driver);
+
+            ClickOnCompareButtons();
             // Assert
-            Assert.Pass();
+            //Assert.;
+        }
+        [Test]
+        public void Test2()
+        {
+            // Arrange
+            // Act
+            HomePage homePage = new HomePage(driver);
+            homePage.ClickDesktopCategory();
+            CategoryPage page = new CategoryPage(driver);
+            page.ClickOnProductCompare();
+            ProductComparison comparePage = new ProductComparison(driver);
+            comparePage.ClickRemoveButtonByID(0);
+            // Assert
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
             //driver.Quit();
+        }
+
+        private void ClickOnCompareButtons()
+        {
+
+            ProductsListComponent productsList = new ProductsListComponent(driver);
+            foreach (var item in productsList.ProductComponents)
+                item.ClickAddToCompareButton();
+            //productsList.ProductComponents[1].ClickAddToCompareButton();
+            //productsList = new ProductsListComponent(driver);
+            //productsList.ProductComponents[2].ClickAddToCompareButton();
         }
     }
 }
