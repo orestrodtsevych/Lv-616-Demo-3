@@ -24,15 +24,9 @@ namespace OpenCartSelenium
             _name = _productLayout.FindElement(By.CssSelector("h4 a"));
             _price = _productLayout.FindElement(By.CssSelector(".price"));
             _description = _productLayout.FindElement(By.CssSelector("p"));
-            _addToCartButton = _productLayout.FindElement(By.CssSelector(".fa fa-shopping-cart"));
-            _addToWishButton = _productLayout.FindElement(By.CssSelector(".fa fa-heart"));
-            _addToCompareButton = _productLayout.FindElement(By.CssSelector(".fa fa-exchange"));
-            /*_name = _productLayout.FindElement(By.XPath(@"//*[@class='caption']/h4/a"));
-            _price = _productLayout.FindElement(By.XPath(@"//*[@class='price']"));
-            _description = _productLayout.FindElement(By.XPath(@"//*[@class='caption']/p[1]"));
-            _addToCartButton = _productLayout.FindElement(By.XPath(@"//*[@class='button-group']/button[1]"));
-            _addToWishButton = _productLayout.FindElement(By.XPath(@"//*[@class='button-group']/button[2]"));
-            _addToCompareButton = _productLayout.FindElement(By.XPath(@"//*[@class='button-group']/button[3]"));*/
+            _addToCartButton = _productLayout.FindElement(By.CssSelector(".fa.fa-shopping-cart"));
+            _addToWishButton = _productLayout.FindElement(By.CssSelector(".fa.fa-heart"));
+            _addToCompareButton = _productLayout.FindElement(By.CssSelector(".fa.fa-exchange"));
         }
 
         public IWebElement ProductLayout => _productLayout;
