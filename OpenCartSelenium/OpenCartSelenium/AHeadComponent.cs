@@ -2,6 +2,7 @@ using System;
 using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 //****
 namespace OpenCartSelenium
 {
@@ -132,15 +133,10 @@ namespace OpenCartSelenium
         public void ClickItemFromCategoryByPartialLinkText(string Category,string CategoryItem)
         {
             ClickSearchProductField();
-            try
-            {
-                driver.FindElement(By.LinkText(Category));
-                driver.FindElement(By.PartialLinkText(CategoryItem));
-            }
-            catch
-            {
-                new Exception("Invalid category name or item from category");
-            }
+            driver.FindElement(By.LinkText(Category)).Click();
+            Thread.Sleep(1000);
+            driver.FindElement(By.PartialLinkText(CategoryItem)).Click();
+           
         }
 
 
