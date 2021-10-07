@@ -37,6 +37,7 @@ namespace OpenCartSelenium.YevheniiTests
             // Act
             HomePage homePage = new HomePage(driver);
             homePage.ClickPhonesAndPdasCategory();
+            
             // Assert
             Assert.Pass();
         }
