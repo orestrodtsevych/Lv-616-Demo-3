@@ -27,5 +27,8 @@ namespace OpenCartSelenium
             foreach (var item in _driver.FindElements(By.CssSelector(".product-layout")))
                 _productComponents.Add(new ProductComponent(item));
         }
+
+        public IEnumerable<string> GetProductsNameList()
+            => _productComponents.Select(x => x.GetNameText());  
     }
 }
