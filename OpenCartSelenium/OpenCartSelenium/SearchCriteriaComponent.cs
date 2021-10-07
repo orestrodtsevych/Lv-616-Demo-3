@@ -38,6 +38,5 @@ namespace OpenCartSelenium
                     option.Click();
             }
         }
-
     }
 }

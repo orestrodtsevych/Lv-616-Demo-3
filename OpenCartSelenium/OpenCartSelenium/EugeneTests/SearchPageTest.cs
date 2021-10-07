@@ -20,50 +20,41 @@ namespace OpenCartSelenium.EugeneTests
         [OneTimeSetUp]
         public void BeforeAllMethods()
         {
+
             driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(OpenCartURL);
         }
         [Test]
         public void SearchEmptyResultPageTest()
         {
             string expectedResult = "Your shopping cart is empty!";
 
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
-
             HomePage homePage = new HomePage(driver);
-            homePage.ClickSearchProductField();
-            homePage.SetSearchProductField("");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("");
 
             SearchEmptyResultPage emptyResultPage = new SearchEmptyResultPage(driver);
-            Assert.AreEqual(expectedResult, emptyResultPage.EmptyResultPageLabel.Text);    //check if search page is empty
+            string actualResult = emptyResultPage.EmptyResultPageLabel.Text;
+            Assert.AreEqual(expectedResult, actualResult);    //check if search page is empty
         }
         [Test]
         public void SearchResultPageTest()
         {
             string expectedResult = "Search - Mac";
 
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
-
             HomePage homePage = new HomePage(driver);
-            homePage.ClickSearchProductField();
-            homePage.SetSearchProductField("Mac");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("Mac");
 
             SearchResultPage resultPage = new SearchResultPage(driver);
-            Assert.AreEqual(expectedResult, resultPage.ResultPageHeader.Text);   //check if page header equals expected result
+            string actualResult = resultPage.ResultPageHeader.Text;
+            Assert.AreEqual(expectedResult, actualResult);   //check if page header equals expected result
         }
         [Test]
         public void SearchResultPageListGridViewTests()
         {
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
-            homePage.ClearSearchProductField();
-            homePage.SetSearchProductField("Mac");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("Mac");
 
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.ClickButtonListView();
@@ -76,58 +67,48 @@ namespace OpenCartSelenium.EugeneTests
         public void CategoriesTest()
         {
             string expectedTitle = "MacBook";
+            string expectedCategory = "Desktops";
 
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
-            homePage.ClearSearchProductField();
-            homePage.SetSearchProductField("Mac");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("Mac");
 
             SearchCriteriaComponent searchCriteria = new SearchCriteriaComponent(driver);
-            searchCriteria.ClickCategory();
             searchCriteria.SelectCategory("Desktops");
             searchCriteria.ClickSearchCriteriaButton();
 
             SearchResultPage resultPage = new SearchResultPage(driver);
-            SelectElement expectedCategory = new SelectElement(resultPage.Categories);
+            SelectElement actualCategory = new SelectElement(resultPage.Categories);
+            string actualTitle = resultPage.FirstProductTitle.Text;
 
-            Assert.AreEqual(expectedCategory.SelectedOption.Text, "Desktops");         //check if selected option as same as expected
-            Assert.AreEqual(expectedTitle, resultPage.FirstProductTitle.Text);        //check if title of first product in the list as same as expected
+            Assert.AreEqual(actualCategory.SelectedOption.Text, expectedCategory);         //check if selected option as same as expected
+            Assert.AreEqual(expectedTitle, actualTitle);        //check if title of first product in the list as same as expected
         }
         [Test]
         public void SubCategoryTest()
         {
             string expectedTitle = "Apple Cinema 30\"";
 
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
-            homePage.ClearSearchProductField();
-            homePage.SetSearchProductField("C");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("C");
 
             SearchCriteriaComponent searchCriteria = new SearchCriteriaComponent(driver);
-            searchCriteria.ClickCategory();
             searchCriteria.SelectCategory("Components");
             searchCriteria.ClickSubCategory();
             Assert.IsTrue(searchCriteria.SubCategory.Selected);        //assert a check box is checked
             searchCriteria.ClickSearchCriteriaButton();
 
             SearchResultPage resultPage = new SearchResultPage(driver);
-            Assert.AreEqual(expectedTitle, resultPage.FirstProductTitle.Text);   //check if title of first product in the list as same as expected
+            string actualTitle = resultPage.FirstProductTitle.Text;
+
+            Assert.AreEqual(expectedTitle, actualTitle);   //check if title of first product in the list as same as expected
         }
         [Test]
         public void SearchProductDescriptionTest()
         {
             string expectedTitle = "Samsung SyncMaster 941BW";
 
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
-            homePage.ClearSearchProductField();
-            homePage.SetSearchProductField("Imagine the advantages");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("Imagine the advantages");
 
             SearchCriteriaComponent searchCriteria = new SearchCriteriaComponent(driver);
             searchCriteria.ClickDescription();
@@ -135,42 +116,37 @@ namespace OpenCartSelenium.EugeneTests
             searchCriteria.ClickSearchCriteriaButton();
 
             SearchResultPage resultPage = new SearchResultPage(driver);
-            Assert.AreEqual(expectedTitle, resultPage.FirstProductTitle.Text);   //check if title of first product in the list as same as expected
+            string actualTitle = resultPage.FirstProductTitle.Text;
+            Assert.AreEqual(expectedTitle, actualTitle);   //check if title of first product in the list as same as expected
         }
         [Test]
         public void SortByTest()
         {
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
+            string expectedResult = "Model (Z - A)";
             HomePage homePage = new HomePage(driver);
-            homePage.ClearSearchProductField();
-            homePage.SetSearchProductField("M");
-            homePage.SetSearchProductField(Keys.Enter)
-                ;
+            homePage.FindProduct("M");
+
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.ClickSortBy();
             resultPage.SelectSortByType("Model (Z - A)");
 
             SearchResultPage newResultPage = new SearchResultPage(driver);
-            SelectElement expectedResult = new SelectElement(newResultPage.SortBy);
-            Assert.AreEqual("Model (Z - A)", expectedResult.SelectedOption.Text);
+            SelectElement actualResult = new SelectElement(newResultPage.SortBy);
+            Assert.AreEqual(expectedResult, actualResult.SelectedOption.Text);
         }
         [Test]
         public void ShowTest()
         {
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(OpenCartURL);
+            string expectedResult = "100";
             HomePage homePage = new HomePage(driver);
-            homePage.ClearSearchProductField();
-            homePage.SetSearchProductField("A");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.FindProduct("A");
 
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.SelectShowType("100");
 
             SearchResultPage newResultPage = new SearchResultPage(driver);
-            SelectElement expectedResult = new SelectElement(newResultPage.Show);
-            Assert.AreEqual("100", expectedResult.SelectedOption.Text);
+            SelectElement actualResult = new SelectElement(newResultPage.Show);
+            Assert.AreEqual(expectedResult, actualResult.SelectedOption.Text); 
         }
         [OneTimeTearDown]
         public void AfterAllMethods()
