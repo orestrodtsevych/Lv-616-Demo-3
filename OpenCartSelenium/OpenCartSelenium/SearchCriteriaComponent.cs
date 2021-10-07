@@ -11,13 +11,14 @@ namespace OpenCartSelenium
         public IWebElement Description { get; private set; }
         public IWebElement SubCategory { get; private set; }
         public IWebElement SearchCriteriaButton { get; private set; }
-
+        public IWebElement Categories { get; private set; }
         public SearchCriteriaComponent(IWebDriver driver) : base(driver)
         {
             SearchCriteria = driver.FindElement(By.Name("search"));
             Description = driver.FindElement(By.Name("description"));
             SubCategory = driver.FindElement(By.Name("sub_category"));
             SearchCriteriaButton = driver.FindElement(By.Id("button-search"));
+            Categories = driver.FindElement(By.Name("category_id"));
         }
         public void ClickSearchCriteria() => SearchCriteria.Click();
         public void ClickDescription() => Description.Click();
@@ -27,6 +28,15 @@ namespace OpenCartSelenium
         {
             ClickSearchCriteria();
             SearchCriteria.SendKeys(text);
+        }
+        public void ClickCategory() => Categories.Click();
+        public void SelectCategory(string category)
+        {
+            foreach(IWebElement option in Categories.FindElements(By.TagName("option")))
+            {
+                if (option.Text.Equals(category))
+                    option.Click();
+            }
         }
 
     }
