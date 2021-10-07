@@ -26,7 +26,6 @@ namespace OpenCartSelenium.EugeneTests
         [Test]
         public void SearchEmptyResultPageTest()
         {
-
             string expectedResult = "Your shopping cart is empty!";
 
             driver.Manage().Window.Maximize();
@@ -36,14 +35,13 @@ namespace OpenCartSelenium.EugeneTests
             homePage.ClickSearchProductField();
             homePage.SetSearchProductField("");
             homePage.SetSearchProductField(Keys.Enter);
-            SearchEmptyResultPage emptyResultPage = new SearchEmptyResultPage(driver);
 
+            SearchEmptyResultPage emptyResultPage = new SearchEmptyResultPage(driver);
             Assert.AreEqual(expectedResult, emptyResultPage.EmptyResultPageLabel.Text);    //check if search page is empty
         }
         [Test]
         public void SearchResultPageTest()
         {
-
             string expectedResult = "Search - Mac";
 
             driver.Manage().Window.Maximize();
@@ -53,33 +51,30 @@ namespace OpenCartSelenium.EugeneTests
             homePage.ClickSearchProductField();
             homePage.SetSearchProductField("Mac");
             homePage.SetSearchProductField(Keys.Enter);
-            SearchResultPage resultPage = new SearchResultPage(driver);
 
+            SearchResultPage resultPage = new SearchResultPage(driver);
             Assert.AreEqual(expectedResult, resultPage.ResultPageHeader.Text);   //check if page header equals expected result
         }
         [Test]
         public void SearchResultPageListGridViewTests()
         {
-
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
             homePage.ClearSearchProductField();
             homePage.SetSearchProductField("Mac");
             homePage.SetSearchProductField(Keys.Enter);
+
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.ClickButtonListView();
-
             Assert.IsTrue(resultPage.ButtonListView.GetAttribute(TAG_ATTRIBUTE_CLASS).Contains(OPTION_ACTIVE));   //check if list view active
 
             resultPage.ClickButtonGridView();
-
             Assert.IsTrue(resultPage.ButtonGridView.GetAttribute(TAG_ATTRIBUTE_CLASS).Contains(OPTION_ACTIVE));  //check if grid view active
         }
         [Test]
         public void CategoriesTest()
         {
-
             string expectedTitle = "MacBook";
 
             driver.Manage().Window.Maximize();
@@ -103,8 +98,8 @@ namespace OpenCartSelenium.EugeneTests
         [Test]
         public void SubCategoryTest()
         {
-
             string expectedTitle = "Apple Cinema 30\"";
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
@@ -125,8 +120,8 @@ namespace OpenCartSelenium.EugeneTests
         [Test]
         public void SearchProductDescriptionTest()
         {
-
             string expectedTitle = "Samsung SyncMaster 941BW";
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
@@ -150,10 +145,12 @@ namespace OpenCartSelenium.EugeneTests
             HomePage homePage = new HomePage(driver);
             homePage.ClearSearchProductField();
             homePage.SetSearchProductField("M");
-            homePage.SetSearchProductField(Keys.Enter);
+            homePage.SetSearchProductField(Keys.Enter)
+                ;
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.ClickSortBy();
             resultPage.SelectSortByType("Model (Z - A)");
+
             SearchResultPage newResultPage = new SearchResultPage(driver);
             SelectElement expectedResult = new SelectElement(newResultPage.SortBy);
             Assert.AreEqual("Model (Z - A)", expectedResult.SelectedOption.Text);
@@ -167,11 +164,18 @@ namespace OpenCartSelenium.EugeneTests
             homePage.ClearSearchProductField();
             homePage.SetSearchProductField("A");
             homePage.SetSearchProductField(Keys.Enter);
+
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.SelectShowType("100");
+
             SearchResultPage newResultPage = new SearchResultPage(driver);
             SelectElement expectedResult = new SelectElement(newResultPage.Show);
             Assert.AreEqual("100", expectedResult.SelectedOption.Text);
+        }
+        [OneTimeTearDown]
+        public void AfterAllMethods()
+        {
+            driver.Quit();
         }
     }
 }
