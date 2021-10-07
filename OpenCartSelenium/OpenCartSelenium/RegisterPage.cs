@@ -16,7 +16,6 @@ namespace OpenCartSelenium
         public IWebElement SubscribeRadio { get; private set; }
         public IWebElement AgreeCheckBox { get; private set; }
         public IWebElement ContinueButton { get; private set; }
-
         public RegisterPage(IWebDriver driver): base(driver)
         {
             InitialRegisterPage();
@@ -33,12 +32,28 @@ namespace OpenCartSelenium
             AgreeCheckBox = driver.FindElement(By.Name("agree"));
             ContinueButton = driver.FindElement(By.CssSelector(".btn-primary"));
         }
-
+        public void FillRegisterForm(User user)
+        {
+            SetFirstNameField(user.FirstName);
+            SetLastNameField(user.LastName);
+            SetEMailField(user.EMail);
+            SetTelephoneField(user.Telephone);
+            SetPasswordField(user.Password);
+            SetConfirmPasswordField(user.Password);
+        }
         public void ClickFirstNameField() => FirstNameField.Click();
+        public void SetFirstNameField(string firstName) => FirstNameField.SendKeys(firstName);
         public void ClickLastNameField() => LastNameField.Click();
+        public void SetLastNameField(string lastName) => LastNameField.SendKeys(lastName);
         public void ClickEMailField() => EMailField.Click();
+        public void SetEMailField(string eMail) => EMailField.SendKeys(eMail);
         public void ClickTelephoneField() => TelephoneField.Click();
+        public void SetTelephoneField(string telephone) => TelephoneField.SendKeys(telephone);
         public void ClickPasswordField() => PasswordField.Click();
+        public void SetPasswordField(string password) => PasswordField.SendKeys(password);
         public void ClickConfirmPasswordField() => ConfirmPasswordField.Click();
+        public void SetConfirmPasswordField(string password) => ConfirmPasswordField.SendKeys(password);
+        public void ClickAgreeCheckBox() => AgreeCheckBox.Click();
+        public void ClickContinueButton() => ContinueButton.Click();
     }
 }
