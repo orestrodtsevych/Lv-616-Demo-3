@@ -37,9 +37,9 @@ namespace OpenCartSelenium
         public IWebElement AddToWishButton => _addToWishButton;
         public IWebElement AddToCompareButton => _addToCompareButton;
 
-        public string GetNameText => Name.Text;
-        public string GetPriceText => Price.Text;
-        public string GetDescriptionText => Description.Text;
+        public string GetNameText() => Name.Text;
+        public string GetPriceText() => Price.Text;
+        public string GetDescriptionText() => Description.Text;
         public void ClickName() => Name.Click();
         public void ClickAddToCartButton() => AddToCartButton.Click();
         public void ClickAddToWishButton() => AddToWishButton.Click();
