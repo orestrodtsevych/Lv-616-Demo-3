@@ -10,12 +10,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace OpenCartSelenium.YevheniiTests
 {
-    [TestFixture("Windows 10")]
+    //[TestFixture("Windows 10")]
     public class ProductComparisonTests
     {
         private IWebDriver driver;
-        private readonly string ChromeDriverURL = @"C:\Users\Жека\source\repos";
-        private readonly string OpenCartURL = "http://192.168.1.13/opencart/upload/";
+        private readonly string ChromeDriverURL = @"C:\Users\Admin\source\repos";
+        private readonly string OpenCartURL = "http://192.168.1.9/opencart/";
 
         [OneTimeSetUp]
         public void BeforeAllMethods()
@@ -44,7 +44,7 @@ namespace OpenCartSelenium.YevheniiTests
         [OneTimeTearDown]
         public void TearDown()
         {
-            driver.Quit();
+            //driver.Quit();
         }
     }
 }
