@@ -26,9 +26,9 @@ namespace OpenCartSelenium.EugeneTests
         [Test]
         public void SearchEmptyResultPageTest()
         {
-            //Arrange
+
             string expectedResult = "Your shopping cart is empty!";
-            //Act
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
 
@@ -37,15 +37,15 @@ namespace OpenCartSelenium.EugeneTests
             homePage.SetSearchProductField("");
             homePage.SetSearchProductField(Keys.Enter);
             SearchEmptyResultPage emptyResultPage = new SearchEmptyResultPage(driver);
-            //Assert
+
             Assert.AreEqual(expectedResult, emptyResultPage.EmptyResultPageLabel.Text);    //check if search page is empty
         }
         [Test]
         public void SearchResultPageTest()
         {
-            //Arrange
+
             string expectedResult = "Search - Mac";
-            //Act
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
 
@@ -54,13 +54,13 @@ namespace OpenCartSelenium.EugeneTests
             homePage.SetSearchProductField("Mac");
             homePage.SetSearchProductField(Keys.Enter);
             SearchResultPage resultPage = new SearchResultPage(driver);
-            //Assert
+
             Assert.AreEqual(expectedResult, resultPage.ResultPageHeader.Text);   //check if page header equals expected result
         }
         [Test]
         public void SearchResultPageListGridViewTests()
-        {    
-            //Act
+        {
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
             HomePage homePage = new HomePage(driver);
@@ -69,17 +69,17 @@ namespace OpenCartSelenium.EugeneTests
             homePage.SetSearchProductField(Keys.Enter);
             SearchResultPage resultPage = new SearchResultPage(driver);
             resultPage.ClickButtonListView();
-            //Assert
+
             Assert.IsTrue(resultPage.ButtonListView.GetAttribute(TAG_ATTRIBUTE_CLASS).Contains(OPTION_ACTIVE));   //check if list view active
-            //Act
+
             resultPage.ClickButtonGridView();
-            //Assert
+
             Assert.IsTrue(resultPage.ButtonGridView.GetAttribute(TAG_ATTRIBUTE_CLASS).Contains(OPTION_ACTIVE));  //check if grid view active
         }
         [Test]
         public void CategoriesTest()
         {
-            //Arrange
+
             string expectedTitle = "MacBook";
 
             driver.Manage().Window.Maximize();
@@ -96,15 +96,14 @@ namespace OpenCartSelenium.EugeneTests
 
             SearchResultPage resultPage = new SearchResultPage(driver);
             SelectElement expectedCategory = new SelectElement(resultPage.Categories);
-            expectedCategory.SelectByValue("20");                                //select Desktop category to check
 
-            Assert.AreEqual(expectedCategory.SelectedOption.Text, "Desktops");
+            Assert.AreEqual(expectedCategory.SelectedOption.Text, "Desktops");         //check if selected option as same as expected
             Assert.AreEqual(expectedTitle, resultPage.FirstProductTitle.Text);        //check if title of first product in the list as same as expected
         }
         [Test]
         public void SubCategoryTest()
         {
-            //Arrange
+
             string expectedTitle = "Apple Cinema 30\"";
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
@@ -126,7 +125,7 @@ namespace OpenCartSelenium.EugeneTests
         [Test]
         public void SearchProductDescriptionTest()
         {
-            // Arrange
+
             string expectedTitle = "Samsung SyncMaster 941BW";
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
@@ -142,6 +141,37 @@ namespace OpenCartSelenium.EugeneTests
 
             SearchResultPage resultPage = new SearchResultPage(driver);
             Assert.AreEqual(expectedTitle, resultPage.FirstProductTitle.Text);   //check if title of first product in the list as same as expected
+        }
+        [Test]
+        public void SortByTest()
+        {
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(OpenCartURL);
+            HomePage homePage = new HomePage(driver);
+            homePage.ClearSearchProductField();
+            homePage.SetSearchProductField("M");
+            homePage.SetSearchProductField(Keys.Enter);
+            SearchResultPage resultPage = new SearchResultPage(driver);
+            resultPage.ClickSortBy();
+            resultPage.SelectSortByType("Model (Z - A)");
+            SearchResultPage newResultPage = new SearchResultPage(driver);
+            SelectElement expectedResult = new SelectElement(newResultPage.SortBy);
+            Assert.AreEqual("Model (Z - A)", expectedResult.SelectedOption.Text);
+        }
+        [Test]
+        public void ShowTest()
+        {
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(OpenCartURL);
+            HomePage homePage = new HomePage(driver);
+            homePage.ClearSearchProductField();
+            homePage.SetSearchProductField("A");
+            homePage.SetSearchProductField(Keys.Enter);
+            SearchResultPage resultPage = new SearchResultPage(driver);
+            resultPage.SelectShowType("100");
+            SearchResultPage newResultPage = new SearchResultPage(driver);
+            SelectElement expectedResult = new SelectElement(newResultPage.Show);
+            Assert.AreEqual("100", expectedResult.SelectedOption.Text);
         }
     }
 }
