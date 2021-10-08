@@ -12,6 +12,7 @@ namespace OpenCartSelenium.MyTests
     [TestFixture]
     class LoginPageTest
     {
+        const string appURL = "http://192.168.1.16/opencart/upload/";
         private IWebDriver driver;
 
         [OneTimeSetUp]
@@ -20,12 +21,15 @@ namespace OpenCartSelenium.MyTests
             driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
         }
-
+        [SetUp]
+        public void BeforeEveryMethods()
+        {
+            driver.Navigate().GoToUrl(appURL); // const set up
+        }
         [Test]
         public void LoginWithValidData()
         {
             const string pathOfVailidUserTxt = @"C:\Users\vital\OneDrive\Рабочий стол\Testing\C# projects\Lv-616-Demo-3\OpenCartSelenium\OpenCartSelenium\MyTests\TxtFiles\VailidUsers.txt";
-            driver.Navigate().GoToUrl("http://192.168.1.16/opencart/upload/"); // const set up
             List<User> listOfVaildUsers = new List<User>();
 
             //Filling from files
@@ -52,7 +56,6 @@ namespace OpenCartSelenium.MyTests
         [Test]
         public void LoginWithInvalidData()
         {
-            driver.Navigate().GoToUrl("http://192.168.1.16/opencart/upload/");
             const string pathOfInvailidUserTxt = @"C:\Users\vital\OneDrive\Рабочий стол\Testing\C# projects\Lv-616-Demo-3\OpenCartSelenium\OpenCartSelenium\MyTests\TxtFiles\InvailidUsers.txt";
             List<User> listOfInaildUsers = new List<User>();
 
