@@ -282,5 +282,14 @@ namespace OpenCartSelenium
         {
              return GoToLoginPage().SuccessfullLogin(user);
         }
+        public MyAccountPage GoToMyAccountPage()
+        {
+            if (!LoggedUser)
+            {
+                throw new Exception(LOGIN_ERROR);
+            }
+            ClickMyAccountOptionByPartialName("My");
+            return new MyAccountPage(driver);
+        }
     }
 }

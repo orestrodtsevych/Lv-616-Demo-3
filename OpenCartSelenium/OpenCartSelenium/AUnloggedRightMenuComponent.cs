@@ -7,7 +7,7 @@ namespace OpenCartSelenium
 {
     public abstract class AUnloggedRightMenuComponent : AStatusBarComponent
     {
-        public IWebElement LoginButton { get; private set; }
+        public IWebElement LoginPageButton { get; private set; }
         public IWebElement RegisterButton { get; private set; }
         public IWebElement ForgottenPasswordButton { get; private set; }
         public IWebElement MyAccountButton { get; private set; }
@@ -22,7 +22,7 @@ namespace OpenCartSelenium
         public IWebElement NewsletterButton { get; private set; }
         public AUnloggedRightMenuComponent(IWebDriver driver) : base(driver)
         {
-            LoginButton = driver.FindElement(By.XPath("//a[contains(@href, 'login')]"));
+            LoginPageButton = driver.FindElement(By.XPath("//a[contains(@href, 'login')]"));
             RegisterButton = driver.FindElement(By.XPath("//a[contains(@href, 'register')]"));
             ForgottenPasswordButton = driver.FindElement(By.XPath("//a[contains(@href, 'forgotten')]"));
             MyAccountButton = driver.FindElement(By.XPath("//a[contains(@href, 'account')]"));
