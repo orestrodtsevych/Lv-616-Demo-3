@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 
 namespace OpenCartSelenium
 {
-    public  class ALeftMenuComponent : AStatusBarComponent
+    public abstract class ALeftMenuComponent : AStatusBarComponent
     {
         public IList<IWebElement> listOFLeftMenuItems { get; private set; }
 

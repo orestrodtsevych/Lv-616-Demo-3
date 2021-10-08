@@ -134,9 +134,14 @@ namespace OpenCartSelenium
         {
             ClickSearchProductField();
             driver.FindElement(By.LinkText(Category)).Click();
-            Thread.Sleep(1000);
             driver.FindElement(By.PartialLinkText(CategoryItem)).Click();
            
+        }
+        public void ClickCategoryByPartialLinkText(string Category)
+        {
+            ClickSearchProductField();
+            driver.FindElement(By.LinkText(Category)).Click();
+
         }
 
 
