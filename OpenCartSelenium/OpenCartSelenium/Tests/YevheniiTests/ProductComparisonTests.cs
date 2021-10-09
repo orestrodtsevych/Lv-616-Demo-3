@@ -31,33 +31,46 @@ namespace OpenCartSelenium.YevheniiTests
         {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
+            
+            
+            //ClickOnCompareButtons();
+            //ProductsListComponent productsList = new ProductsListComponent(driver);
+            //page.ClickOnProductCompare();
+
+            //ClickOnCompareButtons();
         }
 
         [Test]
+        [TestCase('$')]
+        public void CurrencyCheckTest(char expected)
+        {
+            // Arrange
+            HomePage homePage = new HomePage(driver);
+            // Act          
+            char actual = homePage.GetCurrencyText();
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [Test]
+        [TestCase("Phones & PDAs")]
+        public void CategoryCheckTest(string expected)
+        {
+            // Arrange
+            HomePage homePage = new HomePage(driver);
+            // Act
+            homePage.ClickPhonesAndPdasCategory();
+            CategoryPage page = new CategoryPage(driver);
+            Console.WriteLine( page.GetBreadcrumbText(0) );
+            // Assert
+        }
+        [Test]
+        [TestCase]
         public void Test1()
         {
             // Arrange
             // Act
-            HomePage homePage = new HomePage(driver);
-            homePage.ClickPhonesAndPdasCategory();
-            //ClickOnCompareButtons();
-            ProductsListComponent productsList = new ProductsListComponent(driver);
-
-            ClickOnCompareButtons();
-            // Assert
-            //Assert.;
-        }
-        [Test]
-        public void Test2()
-        {
-            // Arrange
-            // Act
-            HomePage homePage = new HomePage(driver);
-            homePage.ClickDesktopCategory();
-            CategoryPage page = new CategoryPage(driver);
-            page.ClickOnProductCompare();
-            ProductComparison comparePage = new ProductComparison(driver);
-            comparePage.ClickRemoveButtonByID(0);
+            //ProductComparison comparePage = new ProductComparison(driver);
+            //comparePage.ClickRemoveButtonByID(0);
             // Assert
         }
 
