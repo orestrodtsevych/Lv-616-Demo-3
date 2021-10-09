@@ -21,7 +21,7 @@ namespace OpenCartSelenium.YevheniiTests
         public void BeforeAllMethods()
         {
             driver = new ChromeDriver(ChromeDriverURL);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
@@ -60,8 +60,9 @@ namespace OpenCartSelenium.YevheniiTests
             // Act
             homePage.ClickPhonesAndPdasCategory();
             CategoryPage page = new CategoryPage(driver);
-            Console.WriteLine( page.GetBreadcrumbText(0) );
+            string actual = page.GetLastBreadcrumbText();
             // Assert
+            Assert.AreEqual(expected, actual);
         }
         [Test]
         [TestCase]

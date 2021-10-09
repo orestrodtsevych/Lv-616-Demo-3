@@ -11,7 +11,7 @@ namespace OpenCartSelenium
         public IList<IWebElement> Breadcrumps { get; private set; }
         public AStatusBarComponent(IWebDriver driver) : base(driver)
         {
-            Breadcrumps = driver.FindElements(By.CssSelector(".beradrump li"));
+            Breadcrumps = driver.FindElements(By.XPath("//*[@id='product-category']/ul/li"));
         }
         public int GetCountBreadcrumps() => Breadcrumps.Count;
         public IWebElement GetBreadcrumb(int breadcrumbIndex)
