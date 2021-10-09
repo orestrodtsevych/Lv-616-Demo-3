@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace OpenCartSelenium.YevheniiTests
         private IWebDriver driver;
         private readonly string ChromeDriverURL = @"C:\Users\Admin\source\repos";
         private readonly string OpenCartURL = "http://192.168.1.9/opencart/";
-
+        
         [OneTimeSetUp]
         public void BeforeAllMethods()
         {
@@ -31,8 +32,8 @@ namespace OpenCartSelenium.YevheniiTests
         {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
-            
-            
+
+
             //ClickOnCompareButtons();
             //ProductsListComponent productsList = new ProductsListComponent(driver);
             //page.ClickOnProductCompare();
@@ -65,21 +66,54 @@ namespace OpenCartSelenium.YevheniiTests
             Assert.AreEqual(expected, actual);
         }
         [Test]
-        [TestCase]
-        public void Test1()
+        [TestCase(arg:new string[]{ "HTC Touch HD", "iPhone", "Palm Treo Pro" })]
+        public void ProductsListTest(string [] productNames)//string first, string second, string third)
         {
             // Arrange
+            ProductsListComponent productsList = new ProductsListComponent(driver);
             // Act
-            //ProductComparison comparePage = new ProductComparison(driver);
-            //comparePage.ClickRemoveButtonByID(0);
+            string[] actualNames = productsList.GetProductsNameList().ToArray();
             // Assert
+            Assert.AreEqual(productNames, actualNames);
+        }
+        [Test]
+        [TestCase(3)]
+        public void CountOfSelectedProductTest(int countOfProducts)
+        {
+            // Arrange
+            CategoryPage page = new CategoryPage(driver);
+            ProductsListComponent productsList = new ProductsListComponent(driver);
+            // Act
+            foreach (var item in productsList.ProductComponents)
+                item.ClickAddToCompareButton();
+            delay();
+            // Assert
+            Assert.AreEqual($"Product Compare ({ countOfProducts})", page.ProductCompareText);
+        }
+        [Test]
+        [TestCase(arg: new double[] { 122, 123.2, 337.99})]
+        public void ProductCompareTest(double[] prices)
+        {
+            // Arrange
+            CategoryPage page = new CategoryPage(driver);
+            ProductComparison comPage;
+            // Act
+            page.ClickOnProductCompare();
+            comPage = new ProductComparison(driver);
+            // Assert
+            Assert.AreEqual(prices, comPage.Prices);
         }
 
+            //ProductComparison comparePage = new ProductComparison(driver);
+            //comparePage.ClickRemoveButtonByID(0);
         [OneTimeTearDown]
         public void TearDown()
         {
-            //driver.Quit();
+            driver.Quit();
         }
+
+        private void delay()
+            => Thread.Sleep(1000);
 
         private void ClickOnCompareButtons()
         {
