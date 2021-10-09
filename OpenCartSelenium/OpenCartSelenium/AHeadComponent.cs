@@ -115,6 +115,7 @@ namespace OpenCartSelenium
             CreateDropdownOptions(By.CssSelector("ul.dropdown-menu.dropdown-menu-right li"));
             ClickDropdownOptionByPartialName(optionName);
         }
+        
         public void ClickWishList() => WishList.Click();
         public void ClickShoppingCart() => ShoppingCart.Click();
         public void ClickCheckout() => Checkout.Click();
@@ -130,18 +131,33 @@ namespace OpenCartSelenium
         public void ClickCamerasCategory() => CamerasCategory.Click();
         public void ClickMP3PlayersCategory() => MP3PlayersCategory.Click();
 
-        public void ClickItemFromCategoryByPartialLinkText(string Category,string CategoryItem)
+        public void ClickDesktopCategoryOptionByPartialName(string optionName)
         {
             ClickSearchProductField();
-            driver.FindElement(By.LinkText(Category)).Click();
-            driver.FindElement(By.PartialLinkText(CategoryItem)).Click();
-           
+            ClickDesktopCategory();
+            CreateDropdownOptions(By.CssSelector("ul.list-unstyled li"));
+            ClickDropdownOptionByPartialName(optionName);
         }
+        private void ClickOnShowAll()
+        {
+            driver.FindElement(By.PartialLinkText("Show All")).Click();
+        }
+        public ProductPage ClickShowAllFromCategoryByPartialCategoryName(string Category)
+        {
+            ClickCategoryByPartialLinkText(Category);
+            ClickOnShowAll();
+            return new ProductPage(driver);
+
+        }
+        //public void ClickItemFromCategoryByPartialLinkText(string Category,string CategoryItem)
+        //{
+        //    ClickCategoryByPartialLinkText(Category);
+        //    driver.FindElement(By.PartialLinkText(CategoryItem)).Click();    
+        //}
         public void ClickCategoryByPartialLinkText(string Category)
         {
             ClickSearchProductField();
-            driver.FindElement(By.LinkText(Category)).Click();
-
+            driver.FindElement(By.PartialLinkText(Category)).Click();
         }
 
 

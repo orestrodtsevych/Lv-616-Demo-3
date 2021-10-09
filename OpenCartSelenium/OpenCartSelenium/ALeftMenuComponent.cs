@@ -18,5 +18,10 @@ namespace OpenCartSelenium
         {
             return driver.FindElement(By.CssSelector("#column-left > div.list-group > a.list-group-item.active"));
         }
+        public string GetCurrentItemFromLeftMenuText()
+        {
+            return GetCurrentItemFromLeftMenu().Text.ToString();
+        }
+       
     }
 }
