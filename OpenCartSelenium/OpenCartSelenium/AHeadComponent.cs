@@ -183,7 +183,7 @@ namespace OpenCartSelenium
         {
             int i;
             string str = null;
-            if (GetCurrencyText() != '€')
+            if (GetCurrencyText() != 'ï¿½')
             {
                 for (i = 0; i < GetShoppingCartButtonText().Length; i++)
                 {
