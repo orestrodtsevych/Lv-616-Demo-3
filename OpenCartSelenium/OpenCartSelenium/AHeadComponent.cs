@@ -200,7 +200,7 @@ namespace OpenCartSelenium
         {
             int i;
             string str = null;
-            if (GetCurrencyText() != '€')
+            if (GetCurrencyText() != 'ï¿½')
             {
                 for (i = 0; i < GetShoppingCartButtonText().Length; i++)
                 {
@@ -302,6 +302,15 @@ namespace OpenCartSelenium
         public MyAccountPage Login(User user)
         {
              return GoToLoginPage().SuccessfullLogin(user);
+        }
+        public MyAccountPage GoToMyAccountPage()
+        {
+            if (!LoggedUser)
+            {
+                throw new Exception(LOGIN_ERROR);
+            }
+            ClickMyAccountOptionByPartialName("My");
+            return new MyAccountPage(driver);
         }
     }
 }
