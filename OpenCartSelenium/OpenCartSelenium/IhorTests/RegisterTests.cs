@@ -32,7 +32,7 @@ namespace OpenCartSelenium.IhorTests
         public void RegisterxNewUser()
         {
             RegisterPage registerPage = new RegisterPage(driver);
-            User newUser = User.CreateBuilder().SetFirstName("roman").SetLastName("romaniv").SetEMail("romannn@gmal.com")
+            User newUser = User.CreateBuilder().SetFirstName("roman").SetLastName("romaniv").SetEMail("romaniv@gmal.com")
                 .SetTelephone("380676767235").SetPassword("passwrd").Build();
             
             registerPage.FillRegisterForm(newUser);
