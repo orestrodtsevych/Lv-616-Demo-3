@@ -11,7 +11,8 @@ namespace OpenCartSelenium
         public IWebElement ChangeYourPassword { get; private set; }
         public ARightMenuComponent(IWebDriver driver) : base(driver)
         {
-            ChangeYourPassword = driver.FindElement(By.PartialLinkText("password"));
+            //ChangeYourPassword = driver.FindElement(By.PartialLinkText("password"));
+            EditAccountInformation = driver.FindElement(By.XPath("//*[text()='Edit Account']"));
         }
         public string GetEditAccountInformationText() => EditAccountInformation.Text;
         public void ClickEditAccountInformation() => EditAccountInformation.Click();
