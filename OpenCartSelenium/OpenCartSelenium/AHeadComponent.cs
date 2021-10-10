@@ -8,7 +8,7 @@ namespace OpenCartSelenium
 {
     public abstract class AHeadComponent
     {
-        private class DropdownOptions
+        public class DropdownOptions
         {
             private readonly IWebDriver driver;
             public IList<IWebElement> ListOptions { get; private set; }

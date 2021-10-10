@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using OpenQA.Selenium;
 using System.Threading;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+
 
 namespace OpenCartSelenium
 {
@@ -52,13 +55,15 @@ namespace OpenCartSelenium
         
         private DropdownOptions dropdownOptions;
 
+        
         public void ClickParentCategoryOptionByPartialName(string optionName)
         {
-
+            
             ClickAddCategoryDataParent();
             SendKeysDataParent(optionName);
-            ClickAddCategoryDataParent();
+            Thread.Sleep(1000);//Only for presentation
             CreateDropdownOptions(By.CssSelector("ul.dropdown-menu li"));
+            Thread.Sleep(1000);//Only for presentation
             ClickDropdownOptionByPartialName(optionName);
         }
         public IWebElement AddCategoryDataParent { get; private set; }
@@ -100,6 +105,7 @@ namespace OpenCartSelenium
                 throw new FormatException(OPTION_NOT_FOUND_MESSAGE);
             }
             dropdownOptions.ClickDropdownOptionByPartialName(optionName);
+            
             dropdownOptions = null;
         }
         private bool FindDropdownOptionByPartialName(string optionName)
