@@ -20,16 +20,18 @@ namespace OpenCartSelenium.IhorTests
         {
             driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-        }
-        [SetUp]
-        public void SetUp()
-        {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(OpenCartURL);
             LoginPage loginPage = new LoginPage(driver);
             loginPage.SetEmailField("tolik@gmail.com");
             loginPage.SetPasswordField("tolik");
             loginPage.ClickLoginButton();
+        }
+        [SetUp]
+        public void SetUp()
+        {
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(OpenCartURL);
         }
         [Test]
         public void EditDataTest()
@@ -41,6 +43,7 @@ namespace OpenCartSelenium.IhorTests
             User user = User.CreateBuilder().SetFirstName("Anatolii").SetLastName("Lembryk")
                 .SetEMail("tolik@gmail.com").SetTelephone("380976543430").Build();
             editAccountPage.FillForm(user);
+
             MyAccountMessagePage messagePage = editAccountPage.ClickContinueToMyAccountButton();
             string expectedMessage = messagePage.EXPECTED_SUCCESS_MESSAGE;
             string actualMessage = messagePage.GetAlertMessageText();
@@ -53,9 +56,11 @@ namespace OpenCartSelenium.IhorTests
             myAccountPage.ClickEditAccountInformation();
             EditAccountPage editAccountPage = new EditAccountPage(driver);
             editAccountPage.ClearAll();
+
             User user = User.CreateBuilder().SetFirstName(string.Empty).SetLastName("Lembryk")
                 .SetEMail("tolik@gmail.com").SetTelephone("380976543430").Build();
             editAccountPage.FillForm(user);
+
             EditAccountDangerText editAccountDanger = editAccountPage.ClickContinueButton();
             string expectedDangerText = editAccountDanger.EXPECTED_VALID_FIRSTNAME_MESSAGE;
             string actualDangerText = editAccountDanger.GetFirstNameTextDanger();
