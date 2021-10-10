@@ -54,6 +54,21 @@ namespace OpenCartSelenium
         public void ClickConfirmPasswordField() => ConfirmPasswordField.Click();
         public void SetConfirmPasswordField(string password) => ConfirmPasswordField.SendKeys(password);
         public void ClickAgreeCheckBox() => AgreeCheckBox.Click();
-        public void ClickContinueButton() => ContinueButton.Click();
+        public AccountSuccessPage ClickContinueButtonSuccess()
+        {
+            ContinueButton.Click();
+            return new AccountSuccessPage(driver);
+        }
+        public RegisterTextDanger ClickContinueButtonTextDanger()
+        {
+            ContinueButton.Click();
+            return new RegisterTextDanger(driver);
+        }
+        public RegisterMessagePage ClickContinueButtonMessagePage()
+        {
+            ContinueButton.Click();
+            return new RegisterMessagePage(driver);
+        }
+
     }
 }
