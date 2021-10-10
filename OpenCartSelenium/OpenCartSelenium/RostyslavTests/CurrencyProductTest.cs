@@ -6,15 +6,14 @@ using System.Threading;
 
 namespace OpenCartSelenium.RostyslavTests
 {
-    class CurrencyTests
+    class CurrencyProductTest
     {
-        private readonly string URL = "http://localhost/OpenCart/upload/";
+        private readonly string URLMacBook = "http://localhost/OpenCart/upload/index.php?route=product/product&product_id=43";
         private readonly By CurrencyList = By.XPath("/html/body/nav/div/div[1]/form/div/button");
         private readonly By CurrencyEuro = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[1]/button");
         private readonly By CurrencyPound = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[2]/button");
         private readonly By CurrencyDollar = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[3]/button");
-        private readonly By CurrencyPriceTax = By.XPath("//*[@id='content']/div[2]/div[1]/div/div[2]/p[2]/span");
-
+        private readonly By CurrencyPriceTax = By.XPath("//*[@id='content']/div/div[2]/ul[2]/li[2]");
         private IWebDriver driver;
         [OneTimeSetUp]
         public void StartingChrome()
@@ -25,7 +24,7 @@ namespace OpenCartSelenium.RostyslavTests
         [SetUp]
         public void BeforeEveryMethods()
         {
-            driver.Navigate().GoToUrl(URL); // const set up
+            driver.Navigate().GoToUrl(URLMacBook); // const set up
         }
         public string ChooseCurrency(By CurrencyXPath)
         {
@@ -44,9 +43,9 @@ namespace OpenCartSelenium.RostyslavTests
             return price;
         }
         public string GetSpecSymbol(string price)
-        {          
+        {
             string GetSpecSymbol = "ERROR";
-            string v1 = "$";string v2 = "€";string v3 = "£";
+            string v1 = "$"; string v2 = "€"; string v3 = "£";
             for (int i = 0; i < price.Length; i++)
             {
                 if (price.Contains(v1))
