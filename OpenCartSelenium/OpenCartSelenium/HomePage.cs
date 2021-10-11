@@ -16,11 +16,19 @@ namespace OpenCartSelenium
             ClickCurrencyByPartialName(currency);
             return new HomePage(driver);
         }
-        public void FindProduct(string searchText)
+        public SearchCriteriaComponent FindProduct(string searchText)
         {
             ClearSearchProductField();
             SetSearchProductField(searchText);
             SetSearchProductField(Keys.Enter);
+            if(searchText == "")
+            {
+                return new SearchEmptyResultPage(driver);
+            }
+            else
+            {
+                return new SearchResultPage(driver);
+            }
         }
     }
 }

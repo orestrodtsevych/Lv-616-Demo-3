@@ -31,21 +31,24 @@ namespace OpenCartSelenium
         public void ClickProductCompare() => ProductCompare.Click();
         public void ClickSortBy() => SortBy.Click();
         public void ClickShow() => Show.Click();
-        public void SelectSortByType(string category)
+        public SearchResultPage SelectSortByType(string category)
         {
             foreach (IWebElement type in SortBy.FindElements(By.TagName("option")))
             {
                 if (type.Text.Equals(category))
                     type.Click();
+                
             }
+            return new SearchResultPage(driver);
         }
-        public void SelectShowType(string category)
+        public SearchResultPage SelectShowType(string category)
         {
             foreach (IWebElement type in Show.FindElements(By.TagName("option")))
             {
                 if (type.Text.Equals(category))
                     type.Click();
             }
+            return new SearchResultPage(driver);
         }
     }
 }

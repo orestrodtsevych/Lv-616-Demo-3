@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-//****
+
 namespace OpenCartSelenium
 {
     public abstract class AHeadComponent
@@ -48,9 +48,7 @@ namespace OpenCartSelenium
                 GetDropdownOptionByPartialName(optionName).Click();
             }
         }
-
-        //-------------------------------------------------------------
-
+       
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
         private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
@@ -156,8 +154,11 @@ namespace OpenCartSelenium
             driver.FindElement(By.PartialLinkText(Category)).Click();
         }
 
+<<<<<<< HEAD
 
        
+=======
+>>>>>>> deef80cb16824a1f7c3a85704e8e7b50152e4b61
         public IWebElement GetMenuTopByCategoryPartianName(string categoryName)
         {
             IWebElement result = null;
@@ -244,7 +245,6 @@ namespace OpenCartSelenium
         }
 
         // Dropdown Methods
-
         private void CreateDropdownOptions(By searchLocator)
         {
             dropdownOptions = new DropdownOptions(searchLocator, driver);
