@@ -2,51 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using OpenQA.Selenium;
+using static OpenCartSelenium.AHeadComponent;
 
 namespace OpenCartSelenium
 {
     public abstract class AAdminNavigationComponent
     {
-        private class DropdownOptions
-        {
-            private readonly IWebDriver driver;
-            public IList<IWebElement> ListOptions { get; private set; }
-            public DropdownOptions(By searchLocator, IWebDriver driver)
-            {
-                this.driver = driver;
-                InitListOptions(searchLocator);
-            }
-            private void InitListOptions(By searchLocator)
-            {
-                ListOptions = driver.FindElements(searchLocator);
-            }
-            public IWebElement GetDropdownOptionByPartialName(string optionName)
-            {
-                IWebElement result = null;
-                foreach (var item in ListOptions)
-                {
-                    if (item.Text.ToLower().Contains(optionName.ToLower()))
-                    {
-                        result = item;
-                        break;
-                    }
-                }
-                return result;
-            }
-            public List<string> GetListOptionsText()
-            {
-                List<string> result = new List<string>();
-                foreach (var item in ListOptions)
-                {
-                    result.Add(item.Text);
-                }
-                return result;
-            }
-            public void ClickDropdownOptionByPartialName(string optionName)
-            {
-                GetDropdownOptionByPartialName(optionName).Click();
-            }
-        }
+        
         protected IWebDriver driver;
         private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         
@@ -120,30 +82,7 @@ namespace OpenCartSelenium
             ClickDropdownOptionByPartialName(optionName);
             return new AdminCategoriesPage(driver);
         }
-        //public void ClickDesktopCategoryOptionByPartialName(string optionName)
-        //{
-        //    ClickSearchProductField();
-        //    ClickDesktopCategory();
-        //    CreateDropdownOptions(By.CssSelector("ul.list-unstyled li"));
-        //    ClickDropdownOptionByPartialName(optionName);
-        //}
-
-        //public void ClickOnNavigationItemByName(string NavigationItem)
-        //{
-        //    string PartOfXpath = "//a[text()=' ";
-        //    string FinalPartOfXpath = "']";
-        //    string FullXpath = PartOfXpath + NavigationItem + FinalPartOfXpath;
-        //    driver.FindElement(By.XPath(FullXpath)).Click();
-        //}
-        //public void ClickItemFromByNavigationItemName(string NavigationItem,string ItemInNavigatinItem)
-        //{
-        //    ClickOnNavigationItemByName(NavigationItem);
-        //    string PartOfXpath = "//*[@id='menu']//a[text()='";
-        //    string FinalPartOfXpath = "']";
-        //    string FullXpath = PartOfXpath + ItemInNavigatinItem + FinalPartOfXpath;
-        //    driver.FindElement(By.XPath(FullXpath)).Click();
-
-        //}
+       
 
 
 

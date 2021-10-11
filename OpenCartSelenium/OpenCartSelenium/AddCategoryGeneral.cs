@@ -27,7 +27,6 @@ namespace OpenCartSelenium
             SendKeysCategoryName(Keys);
             ClickMetaTagTitle();
             SendKeysMetaTagTitle(Keys);
-            
             ClickAddCategoryDataButton();
             return new AddCategoryData(driver);
         }

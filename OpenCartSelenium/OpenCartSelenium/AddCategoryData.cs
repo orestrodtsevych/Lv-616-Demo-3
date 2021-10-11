@@ -5,79 +5,34 @@ using OpenQA.Selenium;
 using System.Threading;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using static OpenCartSelenium.AHeadComponent;
 
 
 namespace OpenCartSelenium
 {
     public class AddCategoryData: AAdminNavigationComponent
     {
-        private class DropdownOptions
-        {
-            private readonly IWebDriver driver;
-            public IList<IWebElement> ListOptions { get; private set; }
-            public DropdownOptions(By searchLocator, IWebDriver driver)
-            {
-                this.driver = driver;
-                InitListOptions(searchLocator);
-            }
-            private void InitListOptions(By searchLocator)
-            {
-                ListOptions = driver.FindElements(searchLocator);
-            }
-            public IWebElement GetDropdownOptionByPartialName(string optionName)
-            {
-                IWebElement result = null;
-                foreach (var item in ListOptions)
-                {
-                    if (item.Text.ToLower().Contains(optionName.ToLower()))
-                    {
-                        result = item;
-                        break;
-                    }
-                }
-                return result;
-            }
-            public List<string> GetListOptionsText()
-            {
-                List<string> result = new List<string>();
-                foreach (var item in ListOptions)
-                {
-                    result.Add(item.Text);
-                }
-                return result;
-            }
-            public void ClickDropdownOptionByPartialName(string optionName)
-            {
-                GetDropdownOptionByPartialName(optionName).Click();
-            }
-        }
-        private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         
+        private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";  
         private DropdownOptions dropdownOptions;
-
-        
+ 
         public void ClickParentCategoryOptionByPartialName(string optionName)
         {
-            
             ClickAddCategoryDataParent();
             SendKeysDataParent(optionName);
             Thread.Sleep(1000);//Only for presentation
             CreateDropdownOptions(By.CssSelector("ul.dropdown-menu li"));
-            Thread.Sleep(1000);//Only for presentation
             ClickDropdownOptionByPartialName(optionName);
         }
         public IWebElement AddCategoryDataParent { get; private set; }
         public IWebElement TopCheckbox { get; private set; }
         public IWebElement SaveChanges { get; private set; }
-       // public IWebElement AditionalElementDropDown { get; private set; }
         public AddCategoryData(IWebDriver driver) : base(driver)
         {
             AddCategoryDataParent = driver.FindElement(By.Id("input-parent"));
             TopCheckbox = driver.FindElement(By.CssSelector("#input-top"));
-            SaveChanges = driver.FindElement(By.CssSelector("button.btn.btn-primary"));
-            
+            SaveChanges = driver.FindElement(By.CssSelector("button.btn.btn-primary"));  
         }
-        //public void ClickOnAditionalElementDropDown() => AditionalElementDropDown.Click();
         public void ClickAddCategoryDataParent() => AddCategoryDataParent.Click();
         public void SendKeysDataParent(string ParentName) => AddCategoryDataParent.SendKeys(ParentName);
         public void ClickTopCheckbox() => TopCheckbox.Click();

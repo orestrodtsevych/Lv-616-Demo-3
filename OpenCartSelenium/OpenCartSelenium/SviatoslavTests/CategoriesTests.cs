@@ -25,21 +25,17 @@ namespace OpenCartSelenium.SviatoslavTests
         
         public void CategoryPreTest(string CategoryExpected)
         {
-
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(URL);
-            Thread.Sleep(2000);
-
+            Thread.Sleep(1000);
             HomePage homePage = new HomePage(driver);
-            
-            Thread.Sleep(2000);
-
+            Thread.Sleep(1000);
             ProductPage productPage =homePage.ClickShowAllFromCategoryByPartialCategoryName(CategoryExpected);
 
             string actualInLeftMenu = productPage.GetCurrentItemFromLeftMenuText();
             string actualInContent = productPage.GetCategoryNameFromContent();
             StringAssert.Contains(CategoryExpected, actualInLeftMenu);
-            Console.WriteLine(CategoryExpected+":-"+ actualInLeftMenu+"||"+ actualInContent);
+            Console.WriteLine("Expected: "+CategoryExpected+" Actual in Left: "+ actualInLeftMenu+ " Actual in Content: " + actualInContent);
             Assert.AreEqual(CategoryExpected, actualInContent);
         }
         [Test]
@@ -78,20 +74,23 @@ namespace OpenCartSelenium.SviatoslavTests
         {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(AdminURL);
-            Thread.Sleep(2000);//Only for presentation
+            Thread.Sleep(1000);//Only for presentation
             LogInAsAdminPage logInAsAdminPage = new LogInAsAdminPage(driver);
             string UserName = "admin";
             string Password = "AdminU-P784_2-77_LV";
             logInAsAdminPage.LogInAsAdminWithCredites(UserName, Password);
             AdminDashboardPage adminDashboardPage = logInAsAdminPage.ClickOnLogInButton();
-            Thread.Sleep(2000);//Only for presentation
+
+            Thread.Sleep(1000);//Only for presentation
             string OptionName = "Categories";
             AdminCategoriesPage adminCategoriesPage = adminDashboardPage.ClickAdminCatalogCategoryOptionByPartialName(OptionName);
-            Thread.Sleep(2000);//Only for presentation
+            Thread.Sleep(1000);//Only for presentation
+
             AddCategoryGeneral addCategoryGeneral= adminCategoriesPage.ClickAddNewCategoryButton();
             string NewCategoryName = "Test Category";
             AddCategoryData addCategory = addCategoryGeneral.InputDataCategoryGeneral(NewCategoryName);
             AdminCategoriesPage adminCategoriesPage2 = addCategory.InputDataInAddCategoryDataWhithoutParent();
+
             AddCategoryGeneral addCategoryGeneral2 = adminCategoriesPage2.ClickAddNewCategoryButton();
             string NewCategoryName2 = "Cleaner";
             AddCategoryData addCategory2 = addCategoryGeneral2.InputDataCategoryGeneral(NewCategoryName2);

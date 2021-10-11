@@ -149,11 +149,7 @@ namespace OpenCartSelenium
             return new ProductPage(driver);
 
         }
-        //public void ClickItemFromCategoryByPartialLinkText(string Category,string CategoryItem)
-        //{
-        //    ClickCategoryByPartialLinkText(Category);
-        //    driver.FindElement(By.PartialLinkText(CategoryItem)).Click();    
-        //}
+      
         public void ClickCategoryByPartialLinkText(string Category)
         {
             ClickSearchProductField();
@@ -161,8 +157,7 @@ namespace OpenCartSelenium
         }
 
 
-        //useless
-        //public IWebElement GetCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
+       
         public IWebElement GetMenuTopByCategoryPartianName(string categoryName)
         {
             IWebElement result = null;
