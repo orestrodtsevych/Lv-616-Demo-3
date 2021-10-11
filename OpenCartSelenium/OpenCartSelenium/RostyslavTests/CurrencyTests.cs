@@ -14,12 +14,16 @@ namespace OpenCartSelenium.RostyslavTests
         private readonly By CurrencyPound = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[2]/button");
         private readonly By CurrencyDollar = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[3]/button");
         private readonly By CurrencyPriceTax = By.XPath("//*[@id='content']/div[2]/div[1]/div/div[2]/p[2]/span");
+        private readonly By Cart = By.XPath("//*[@id='cart']/button");
+        private readonly By CartPrice = By.XPath("//*[@id='cart']/ul/li[1]/table/tbody/tr/td[4]");
+        private readonly By AddToCart = By.XPath("//*[@id='content']/div[2]/div[1]/div/div[3]/button[1]");
         private IWebDriver driver;
         [OneTimeSetUp]
         public void StartingChrome()
         {
             driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Window.Maximize();
         }
         [SetUp]
         public void BeforeEveryMethods()
@@ -39,6 +43,13 @@ namespace OpenCartSelenium.RostyslavTests
         public string GetPrice()
         {
             string price = driver.FindElement(CurrencyPriceTax).Text;
+            Thread.Sleep(2000);//Only for presentation
+            return price;
+        } 
+        public string GetPriceCart()
+        {
+            driver.FindElement(Cart).Click();
+            string price = driver.FindElement(CartPrice).Text;
             Thread.Sleep(2000);//Only for presentation
             return price;
         }
@@ -74,6 +85,14 @@ namespace OpenCartSelenium.RostyslavTests
             Console.WriteLine("Currency " + Currency + "( " + GetSpecSymbol(Currency) + " ) Price " + price + "( " + GetSpecSymbol(price) + " )");
         }
         [Test]
+        public void DollarCurrencyTest()
+        {
+            string Currency = ChooseCurrency(CurrencyDollar);
+            string price = GetPrice();
+            OutResult(Currency, price);
+            CurrencyTest(Currency, price);
+        }
+        [Test]
         public void EuroCurrencyTest()
         {
             string Currency = ChooseCurrency(CurrencyEuro);
@@ -90,10 +109,27 @@ namespace OpenCartSelenium.RostyslavTests
             CurrencyTest(Currency, price);
         }
         [Test]
-        public void DollarCurrencyTest()
+        public void DollarCartCurrencyTest()
         {
+            driver.FindElement(AddToCart).Click();
             string Currency = ChooseCurrency(CurrencyDollar);
-            string price = GetPrice();
+            string price = GetPriceCart();
+            OutResult(Currency, price);
+            CurrencyTest(Currency, price);
+        }
+        [Test]
+        public void EuroCartCurrencyTest()
+        {
+            string Currency = ChooseCurrency(CurrencyEuro);
+            string price = GetPriceCart();
+            OutResult(Currency, price);
+            CurrencyTest(Currency, price);
+        }
+        [Test]
+        public void PoundCartCurrencyTest()
+        {
+            string Currency = ChooseCurrency(CurrencyPound);
+            string price = GetPriceCart();
             OutResult(Currency, price);
             CurrencyTest(Currency, price);
         }

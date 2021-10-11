@@ -10,7 +10,6 @@ namespace OpenCartSelenium.RostyslavTests
     {
         private readonly string URL = "http://localhost/OpenCart/upload/";
         private readonly string URLWishList = "http://localhost/OpenCart/upload/index.php?route=account/wishlist";
-        private readonly string URLLoginPage = "http://localhost/OpenCart/upload/index.php?route=account/login";
         private readonly By CurrencyList = By.XPath("/html/body/nav/div/div[1]/form/div/button");
         private readonly By CurrencyEuro = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[1]/button");
         private readonly By CurrencyPound = By.XPath("/html/body/nav/div/div[1]/form/div/ul/li[2]/button");
@@ -24,10 +23,7 @@ namespace OpenCartSelenium.RostyslavTests
         {
             driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            LoginPage loginPage = new LoginPage(driver);
-            loginPage.SuccessfullLogin(SomeUser);
-            driver.Navigate().GoToUrl(URL);
-            driver.FindElements(AddToWishList);
+            driver.Manage().Window.Maximize();
         }
         [SetUp]
         public void BeforeEveryMethods()
@@ -81,6 +77,23 @@ namespace OpenCartSelenium.RostyslavTests
         {
             Console.WriteLine("Currency " + Currency + "( " + GetSpecSymbol(Currency) + " ) Price " + price + "( " + GetSpecSymbol(price) + " )");
         }
+        public void LoginAsUser()
+        {
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.SuccessfullLogin(SomeUser);
+            driver.Navigate().GoToUrl(URL);
+            driver.FindElement(AddToWishList);
+            driver.Navigate().GoToUrl(URLWishList);
+        }
+        [Test]
+        public void DollarCurrencyTest()
+        {
+            LoginAsUser();
+            string Currency = ChooseCurrency(CurrencyDollar);
+            string price = GetPrice();
+            OutResult(Currency, price);
+            CurrencyTest(Currency, price);
+        }
         [Test]
         public void EuroCurrencyTest()
         {
@@ -93,14 +106,6 @@ namespace OpenCartSelenium.RostyslavTests
         public void PoundCurrencyTest()
         {
             string Currency = ChooseCurrency(CurrencyPound);
-            string price = GetPrice();
-            OutResult(Currency, price);
-            CurrencyTest(Currency, price);
-        }
-        [Test]
-        public void DollarCurrencyTest()
-        {
-            string Currency = ChooseCurrency(CurrencyDollar);
             string price = GetPrice();
             OutResult(Currency, price);
             CurrencyTest(Currency, price);

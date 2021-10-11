@@ -20,6 +20,7 @@ namespace OpenCartSelenium.RostyslavTests
         {
             driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Window.Maximize();
         }
         [SetUp]
         public void BeforeEveryMethods()
@@ -74,6 +75,14 @@ namespace OpenCartSelenium.RostyslavTests
             Console.WriteLine("Currency " + Currency + "( " + GetSpecSymbol(Currency) + " ) Price " + price + "( " + GetSpecSymbol(price) + " )");
         }
         [Test]
+        public void DollarCurrencyTest()
+        {
+            string Currency = ChooseCurrency(CurrencyDollar);
+            string price = GetPrice();
+            OutResult(Currency, price);
+            CurrencyTest(Currency, price);
+        }
+        [Test]
         public void EuroCurrencyTest()
         {
             string Currency = ChooseCurrency(CurrencyEuro);
@@ -85,14 +94,6 @@ namespace OpenCartSelenium.RostyslavTests
         public void PoundCurrencyTest()
         {
             string Currency = ChooseCurrency(CurrencyPound);
-            string price = GetPrice();
-            OutResult(Currency, price);
-            CurrencyTest(Currency, price);
-        }
-        [Test]
-        public void DollarCurrencyTest()
-        {
-            string Currency = ChooseCurrency(CurrencyDollar);
             string price = GetPrice();
             OutResult(Currency, price);
             CurrencyTest(Currency, price);
