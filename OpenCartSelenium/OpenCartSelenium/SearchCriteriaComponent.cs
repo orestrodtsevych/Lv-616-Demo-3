@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenCartSelenium
 {
-    class SearchCriteriaComponent : AStatusBarComponent
+    abstract class SearchCriteriaComponent : AStatusBarComponent
     {
         public IWebElement SearchCriteria { get; private set; }
         public IWebElement Description { get; private set; }
@@ -23,7 +23,11 @@ namespace OpenCartSelenium
         public void ClickSearchCriteria() => SearchCriteria.Click();
         public void ClickDescription() => Description.Click();
         public void ClickSubCategory() => SubCategory.Click();
-        public void ClickSearchCriteriaButton() => SearchCriteriaButton.Click();
+        public SearchResultPage ClickSearchCriteriaButton()
+        {
+            SearchCriteriaButton.Click();
+            return new SearchResultPage(driver);
+        }
         public void SetSearchCriteria(string text)
         {
             ClickSearchCriteria();
@@ -32,7 +36,7 @@ namespace OpenCartSelenium
         public void ClickCategory() => Categories.Click();
         public void SelectCategory(string category)
         {
-            foreach(IWebElement option in Categories.FindElements(By.TagName("option")))
+            foreach (IWebElement option in Categories.FindElements(By.TagName("option")))
             {
                 if (option.Text.Equals(category))
                     option.Click();

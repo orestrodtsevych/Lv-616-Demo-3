@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-//****
+
 namespace OpenCartSelenium
 {
     public abstract class AHeadComponent
@@ -48,9 +48,7 @@ namespace OpenCartSelenium
                 GetDropdownOptionByPartialName(optionName).Click();
             }
         }
-
-        //-------------------------------------------------------------
-
+       
         private readonly string TAG_ATTRIBUTE_VALUE = "value";
         private readonly string OPTION_NOT_FOUND_MESSAGE = "Cannot foud the option";
         private readonly string TAG_ATTRIBUTE_TITLE = "title";
@@ -139,9 +137,6 @@ namespace OpenCartSelenium
            
         }
 
-
-        //useless
-        //public IWebElement GetCartTotal() => cartButton.FindElement(By.Id("cart-total")); 
         public IWebElement GetMenuTopByCategoryPartianName(string categoryName)
         {
             IWebElement result = null;
@@ -228,7 +223,6 @@ namespace OpenCartSelenium
         }
 
         // Dropdown Methods
-
         private void CreateDropdownOptions(By searchLocator)
         {
             dropdownOptions = new DropdownOptions(searchLocator, driver);
