@@ -14,7 +14,7 @@ namespace OpenCartSelenium.IhorTests
     class RegisterTests
     {
         IWebDriver driver;
-        private readonly string OpenCartURL = "http://192.168.1.103/opencart/upload/index.php?route=account/register";
+        private readonly string OpenCartURL = "http://192.168.1.104/opencart/upload/index.php?route=account/register";
         [OneTimeSetUp]
         public void BeforeAllMethods()
         {
@@ -29,20 +29,19 @@ namespace OpenCartSelenium.IhorTests
         }
 
         [Test]
-        public void RegisterNewUser()
+        public void RegisterxNewUser()
         {
             RegisterPage registerPage = new RegisterPage(driver);
-            User newUser = User.CreateBuilder().SetFirstName("roman").SetLastName("romaniv").SetEMail("rom123334an@gmal.com")
+            User newUser = User.CreateBuilder().SetFirstName("roman").SetLastName("romaniv").SetEMail("romaniv@gmal.com")
                 .SetTelephone("380676767235").SetPassword("passwrd").Build();
             
             registerPage.FillRegisterForm(newUser);
             registerPage.ClickAgreeCheckBox();
-            registerPage.ClickContinueButton();
 
-            AccountSuccessPage successPage = new AccountSuccessPage(driver);
+            AccountSuccessPage successPage = registerPage.ClickContinueButtonSuccess();
             string expected = "Congratulations! Your new account has been successfully created!";
             string actual = successPage.GetMessageText();
-
+            successPage.ClickEditAccountInformation();
             Assert.IsTrue(actual.Contains(expected));
         }
         [Test]
@@ -54,9 +53,8 @@ namespace OpenCartSelenium.IhorTests
 
             registerPage.FillRegisterForm(newUser);
             registerPage.ClickAgreeCheckBox();
-            registerPage.ClickContinueButton();
 
-            RegisterMessagePage messagePage = new RegisterMessagePage(driver);
+            RegisterMessagePage messagePage = registerPage.ClickContinueButtonMessagePage();
             string expected = messagePage.EXPECTED_WARNING_EMAIL;
             string actual = messagePage.GetAlertMessageText();
             Assert.AreEqual(expected, actual);
@@ -69,44 +67,85 @@ namespace OpenCartSelenium.IhorTests
                 .SetTelephone("380676767235").SetPassword("passwrd").Build();
 
             registerPage.FillRegisterForm(newUser);
-            registerPage.ClickContinueButton();
 
-            RegisterMessagePage messagePage = new RegisterMessagePage(driver);
+            RegisterMessagePage messagePage = registerPage.ClickContinueButtonMessagePage();
             string expected = messagePage.EXPECTED_WARNING_AGREE;
             string actual = messagePage.GetAlertMessageText();
             Assert.AreEqual(expected, actual);
         }
         [Test]
-        public void RegisterValidMessage()
+        public void RegisterValidFirstNameMessage()
         {
             RegisterPage registerPage = new RegisterPage(driver);
-            User newUser = new UserBuilder().SetFirstName(string.Empty).SetLastName(string.Empty).SetEMail(string.Empty)
-                .SetTelephone(string.Empty).SetPassword(string.Empty).Build();
+            User newUser = new UserBuilder().SetFirstName(string.Empty).SetLastName("pasternak").SetEMail("pasternak@gmail.com")
+                .SetTelephone("380981234562").SetPassword("password").Build();
 
             registerPage.FillRegisterForm(newUser);
             registerPage.ClickAgreeCheckBox();
-            registerPage.ClickContinueButton();
 
-            RegisterTextDanger registerTextDanger = new RegisterTextDanger(driver);
+            RegisterTextDanger registerTextDanger = registerPage.ClickContinueButtonTextDanger(); 
             string expectedFirstNameTextDanger = registerTextDanger.EXPECTED_VALID_FIRSTNAME_MESSAGE;
             string actualFirstNameTextDanger = registerTextDanger.GetFirstNameTextDanger();
+            Assert.AreEqual(expectedFirstNameTextDanger, actualFirstNameTextDanger);
+        }
+        [Test]
+        public void RegisterValidLastNameMessage()
+        {
+            RegisterPage registerPage = new RegisterPage(driver);
+            User newUser = new UserBuilder().SetFirstName("oleksii").SetLastName(string.Empty).SetEMail("pasternak@gmail.com")
+                .SetTelephone("380981234562").SetPassword("password").Build();
 
+            registerPage.FillRegisterForm(newUser);
+            registerPage.ClickAgreeCheckBox();
+
+            RegisterTextDanger registerTextDanger = registerPage.ClickContinueButtonTextDanger();
             string expectedLastNameTextDanger = registerTextDanger.EXPECTED_VALID_LASTNAME_MESSAGE;
             string actualLastNameTextDanger = registerTextDanger.GetLastNameTextDanger();
+            Assert.AreEqual(expectedLastNameTextDanger, actualLastNameTextDanger);
+        }
+        [Test]
+        public void RegisterValidEMailMessage()
+        {
+            RegisterPage registerPage = new RegisterPage(driver);
+            User newUser = new UserBuilder().SetFirstName("oleksii").SetLastName("pasternak").SetEMail(string.Empty)
+                .SetTelephone("380981234562").SetPassword("password").Build();
 
+            registerPage.FillRegisterForm(newUser);
+            registerPage.ClickAgreeCheckBox();
+
+            RegisterTextDanger registerTextDanger = registerPage.ClickContinueButtonTextDanger();
             string expectedEMailTextDanger = registerTextDanger.EXPECTED_VALID_EMAIL_MESSAGE;
             string actualEMailTextDanger = registerTextDanger.GetEMailTextDanger();
+            Assert.AreEqual(expectedEMailTextDanger, actualEMailTextDanger);
+        }
+        [Test]
+        public void RegisterValidTelephoneMessage()
+        {
+            RegisterPage registerPage = new RegisterPage(driver);
+            User newUser = new UserBuilder().SetFirstName("oleksii").SetLastName("pasternak").SetEMail("pasternak@gmail.com")
+                .SetTelephone(string.Empty).SetPassword("password").Build();
 
+            registerPage.FillRegisterForm(newUser);
+            registerPage.ClickAgreeCheckBox();
+
+            RegisterTextDanger registerTextDanger = registerPage.ClickContinueButtonTextDanger();
             string expectedTelephoneTextDanger = registerTextDanger.EXPECTED_VALID_TELEPHONE_MESSAGE;
             string actualTelephoneTextDanger = registerTextDanger.GetTelephoneTextDanger();
+            Assert.AreEqual(expectedTelephoneTextDanger, actualTelephoneTextDanger);
+        }
+        [Test]
+        public void RegisterValidPasswordMessage()
+        {
+            RegisterPage registerPage = new RegisterPage(driver);
+            User newUser = new UserBuilder().SetFirstName("oleksii").SetLastName("pasternak").SetEMail("pasternak@gmail.com")
+                .SetTelephone("380981234562").SetPassword(string.Empty).Build();
 
+            registerPage.FillRegisterForm(newUser);
+            registerPage.ClickAgreeCheckBox();
+
+            RegisterTextDanger registerTextDanger = registerPage.ClickContinueButtonTextDanger();
             string expectedPasswordTextDanger = registerTextDanger.EXPECTED_VALID_PASSWORD_MESSAGE;
             string actualPasswordTextDanger = registerTextDanger.GetPasswordTextDanger();
-
-            Assert.AreEqual(expectedFirstNameTextDanger, actualFirstNameTextDanger);
-            Assert.AreEqual(expectedLastNameTextDanger, actualLastNameTextDanger);
-            Assert.AreEqual(expectedEMailTextDanger, actualEMailTextDanger);
-            Assert.AreEqual(expectedTelephoneTextDanger, actualTelephoneTextDanger);
             Assert.AreEqual(expectedPasswordTextDanger, actualPasswordTextDanger);
         }
         [Test]
@@ -119,13 +158,16 @@ namespace OpenCartSelenium.IhorTests
             registerPage.FillRegisterForm(newUser);
             registerPage.SetConfirmPasswordField("notconfirm");
             registerPage.ClickAgreeCheckBox();
-            registerPage.ClickContinueButton();
 
-            RegisterTextDanger registerTextDanger = new RegisterTextDanger(driver);
+            RegisterTextDanger registerTextDanger = registerPage.ClickContinueButtonTextDanger();
             string expectedConfirmTextDanger = registerTextDanger.EXPECTED_VALID_CONFIRMPASSWORD_MESSAGE;
             string actualConfirmTextDanger = registerTextDanger.GetConfirmPasswordTextDanger();
             Assert.AreEqual(expectedConfirmTextDanger, actualConfirmTextDanger);
-
+        }
+        [OneTimeTearDown]
+        public void AfterAllMethods()
+        {
+            driver.Quit();
         }
     }
 }

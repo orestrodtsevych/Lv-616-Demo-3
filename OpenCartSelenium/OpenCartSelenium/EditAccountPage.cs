@@ -5,70 +5,57 @@ using System.Text;
 
 namespace OpenCartSelenium
 {
-    class RegisterPage: AUnloggedRightMenuComponent
+    class EditAccountPage: ARightMenuComponent
     {
         public IWebElement FirstNameField { get; private set; }
         public IWebElement LastNameField { get; private set; }
         public IWebElement EMailField { get; private set; }
         public IWebElement TelephoneField { get; private set; }
-        public IWebElement PasswordField { get; private set; }
-        public IWebElement ConfirmPasswordField { get; private set; }
-        public IWebElement SubscribeRadio { get; private set; }
-        public IWebElement AgreeCheckBox { get; private set; }
         public IWebElement ContinueButton { get; private set; }
-        public RegisterPage(IWebDriver driver): base(driver)
-        {
-            InitialRegisterPage();
-        }
-
-        public void InitialRegisterPage()
+        
+        public EditAccountPage(IWebDriver driver):base(driver)
         {
             FirstNameField = driver.FindElement(By.Id("input-firstname"));
             LastNameField = driver.FindElement(By.Id("input-lastname"));
             EMailField = driver.FindElement(By.Id("input-email"));
             TelephoneField = driver.FindElement(By.Id("input-telephone"));
-            PasswordField = driver.FindElement(By.Id("input-password"));
-            ConfirmPasswordField = driver.FindElement(By.Id("input-confirm"));
-            AgreeCheckBox = driver.FindElement(By.Name("agree"));
             ContinueButton = driver.FindElement(By.CssSelector(".btn-primary"));
         }
-        public void FillRegisterForm(User user)
+        public void ClearAll()
+        {
+            ClearFirstNameField();
+            ClearLastNameField();
+            ClearEMailField();
+            ClearTelephoneField();
+        }
+        public void FillForm(User user)
         {
             SetFirstNameField(user.FirstName);
             SetLastNameField(user.LastName);
             SetEMailField(user.EMail);
             SetTelephoneField(user.Telephone);
-            SetPasswordField(user.Password);
-            SetConfirmPasswordField(user.Password);
         }
         public void ClickFirstNameField() => FirstNameField.Click();
+        public void ClearFirstNameField() => FirstNameField.Clear();
         public void SetFirstNameField(string firstName) => FirstNameField.SendKeys(firstName);
         public void ClickLastNameField() => LastNameField.Click();
+        public void ClearLastNameField() => LastNameField.Clear();
         public void SetLastNameField(string lastName) => LastNameField.SendKeys(lastName);
         public void ClickEMailField() => EMailField.Click();
+        public void ClearEMailField() => EMailField.Clear();
         public void SetEMailField(string eMail) => EMailField.SendKeys(eMail);
         public void ClickTelephoneField() => TelephoneField.Click();
+        public void ClearTelephoneField() => TelephoneField.Clear();
         public void SetTelephoneField(string telephone) => TelephoneField.SendKeys(telephone);
-        public void ClickPasswordField() => PasswordField.Click();
-        public void SetPasswordField(string password) => PasswordField.SendKeys(password);
-        public void ClickConfirmPasswordField() => ConfirmPasswordField.Click();
-        public void SetConfirmPasswordField(string password) => ConfirmPasswordField.SendKeys(password);
-        public void ClickAgreeCheckBox() => AgreeCheckBox.Click();
-        public AccountSuccessPage ClickContinueButtonSuccess()
+        public MyAccountMessagePage ClickContinueToMyAccountButton()
         {
             ContinueButton.Click();
-            return new AccountSuccessPage(driver);
+            return new MyAccountMessagePage(driver);
         }
-        public RegisterTextDanger ClickContinueButtonTextDanger()
+        public EditAccountDangerText ClickContinueButton()
         {
             ContinueButton.Click();
-            return new RegisterTextDanger(driver);
+            return new EditAccountDangerText(driver);
         }
-        public RegisterMessagePage ClickContinueButtonMessagePage()
-        {
-            ContinueButton.Click();
-            return new RegisterMessagePage(driver);
-        }
-
     }
 }

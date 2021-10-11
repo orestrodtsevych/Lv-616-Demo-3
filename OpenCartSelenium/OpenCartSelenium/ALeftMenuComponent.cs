@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 
 namespace OpenCartSelenium
 {
-    public  class ALeftMenuComponent : AStatusBarComponent
+    public abstract class ALeftMenuComponent : AStatusBarComponent
     {
         public IList<IWebElement> listOFLeftMenuItems { get; private set; }
 
@@ -18,5 +18,10 @@ namespace OpenCartSelenium
         {
             return driver.FindElement(By.CssSelector("#column-left > div.list-group > a.list-group-item.active"));
         }
+        public string GetCurrentItemFromLeftMenuText()
+        {
+            return GetCurrentItemFromLeftMenu().Text.ToString();
+        }
+       
     }
 }
