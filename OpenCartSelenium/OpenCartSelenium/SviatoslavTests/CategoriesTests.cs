@@ -12,8 +12,8 @@ namespace OpenCartSelenium.SviatoslavTests
     [TestFixture]
     class CategoriesTests
     {
-        private readonly string URL = "http://192.168.1.105/opencart/upload/";
-        private readonly string AdminURL = "http://192.168.1.105/opencart/upload/admin";
+        private readonly string URL = "http://34.135.92.238/opencart/upload/";
+        private readonly string AdminURL = "http://34.135.92.238/opencart/upload/admin";
         private IWebDriver driver;
 
         [OneTimeSetUp]
